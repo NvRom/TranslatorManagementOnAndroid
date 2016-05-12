@@ -1,0 +1,698 @@
+package cn.cowis.hydrilla.app.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.app.ProgressDialog;
+import android.app.Service;
+import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Binder;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
+import android.widget.Toast;
+import cn.cowis.hydrilla.app.entity.Constants;
+import cn.cowis.hydrilla.app.entity.Manager;
+import cn.cowis.hydrilla.app.entity.SensorManager;
+import cn.cowis.hydrilla.app.entity.TransmitterManager;
+import cn.cowis.hydrilla.app.service.BackEvents.BackEventsType;
+import cn.cowis.modbus.MasterProxy;
+import cn.cowis.modbus.entity.Transmitter;
+import cn.cowis.modbus.exception.ErrorCodeException;
+import cn.cowis.modbus.master.BluetoothMaster;
+import cn.cowis.modbus.master.Master;
+import cn.cowis.modbus.master.USBMaster;
+
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
+
+/**
+ * 是service 操作下面的变送器 麻痹 写的劳资 想吐 有没有
+ */
+
+public class SensorService extends Service {
+
+	public BackEvents backEvents = new BackEvents();
+
+	private MasterProxy masterProxy = null;
+	
+	private ReadNoCacheParamCycle rncpc=null;
+
+	public void setBackEvents(BackEvents backEvents) {
+		this.backEvents = backEvents;
+	}
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+	}
+
+	public class MyBinder extends Binder {
+
+		public SensorService getService() {
+			return SensorService.this;
+		}
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+
+		return new MyBinder();
+
+	}
+
+	/**
+	 * 连接的AsyncTask
+	 * 
+	 * @author Administrator
+	 * 
+	 */
+	private class ConnectAsyncTask extends AsyncTask<Void, Void, Object> {
+
+		private ProgressDialog checkDialog = null;
+
+		private Master master;
+
+		private int slaveIdMin;
+
+		private int slaveIdMax;
+
+		public ConnectAsyncTask(Context context, Master master, int slaveIdMin,
+				int slaveIdMax) {
+			super();
+
+			this.master = master;
+			this.slaveIdMin = slaveIdMin;
+			this.slaveIdMax = slaveIdMax;
+
+			checkDialog = new ProgressDialog(context);
+			checkDialog.setMessage("正在连接，请稍后...");
+			checkDialog.setCanceledOnTouchOutside(false);
+			checkDialog.show();
+			checkDialog.setOnDismissListener(new OnDismissListener() {
+
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					ConnectAsyncTask.this.cancel(true);
+				}
+
+			});
+		}
+
+		@Override
+		protected Object doInBackground(Void... values) {
+
+			masterProxy = MasterProxy.getInstance(master);
+
+			try {
+				masterProxy.open();
+			} catch (Exception e1) {
+
+				return null;
+			}
+
+			List<Integer> listSlaveId = masterProxy.scanForSlaveNodes(
+					slaveIdMin, slaveIdMax);// 搜索存在的从机，并放入List中
+
+			List<TransmitterManager> listTsmt = new ArrayList<TransmitterManager>();
+
+			TransmitterManager tsmtManager = null;
+
+			SensorManager[] sensorManagers = null;
+			try {
+				for (int slaveId : listSlaveId) {
+					tsmtManager = new TransmitterManager(new Transmitter(
+							masterProxy, slaveId));
+
+					tsmtManager.initPartParams();
+
+					sensorManagers = tsmtManager.getAllSensorManagers();
+
+					for (SensorManager sensorManager : sensorManagers) {
+						sensorManager.initPartParams();
+					}
+					listTsmt.add(tsmtManager);
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			return listTsmt;
+
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+
+			checkDialog.dismiss();
+
+			if (result == null) {
+				Toast.makeText(SensorService.this, "通信错误!", Toast.LENGTH_SHORT)
+						.show();
+				return;
+			}
+			if (((List<TransmitterManager>) result).size() == 0) {
+
+				Toast.makeText(SensorService.this, "未找到从机!", Toast.LENGTH_SHORT)
+						.show();
+				return;
+			}
+
+			backEvents.notifyBackEvent(BackEventsType.CONNECTED, result);
+
+		}
+
+	}
+
+	/**
+	 * 读 多个配置的ReadParamAsyncTask 这些属性都已经缓存了
+	 * 
+	 * @author Administrator
+	 * 
+	 */
+	private class ReadCacheParams extends
+			AsyncTask<Void, String, Map<String, Object>> {
+
+		private String[] ids = null;
+
+		private Manager manager = null;
+
+		private ProgressDialog checkDialog = null;
+
+		public ReadCacheParams(Context context, String[] ids, Manager manager) {
+			super();
+
+			this.ids = ids;
+			this.manager = manager;
+
+			checkDialog = new ProgressDialog(context);
+			checkDialog.setMessage("正在读取数据...");
+			checkDialog.setCanceledOnTouchOutside(false);
+			checkDialog.show();
+			checkDialog.setOnDismissListener(new OnDismissListener() {
+
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					ReadCacheParams.this.cancel(true);
+				}
+
+			});
+
+		}
+
+		@Override
+		protected Map<String, Object> doInBackground(Void... values) {
+
+			Map<String, Object> paramValues = new HashMap<String, Object>();
+
+			for (String id : ids) {
+				try {
+					paramValues.put(id, manager.getParamValue(id));
+					// this.publishProgress(id);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+			return paramValues;
+
+		}
+
+		@Override
+		protected void onPostExecute(Map<String, Object> result) {
+
+			checkDialog.dismiss();
+			if (result == null) {
+
+				Toast.makeText(SensorService.this, "读取失败，请检查连接是否正常!",
+						Toast.LENGTH_SHORT).show();
+			} else
+
+				backEvents.notifyBackEvent(BackEventsType.CACHE_READ_VALUE,
+						result);
+
+		}
+
+	}
+
+	/**
+	 * 读 变送器下 所有配置
+	 * 
+	 * @author Administrator
+	 * 
+	 */
+	private class ReadAllCacheParams extends AsyncTask<Void, String, Object> {
+
+		private TransmitterManager tsmtManager = null;
+
+		private ProgressDialog checkDialog = null;
+
+		public ReadAllCacheParams(Context context,
+				TransmitterManager tsmtManager) {
+			super();
+
+			this.tsmtManager = tsmtManager;
+
+			checkDialog = new ProgressDialog(context);
+			checkDialog.setMessage("正在读取所有配置...");
+			checkDialog.setCanceledOnTouchOutside(false);
+			checkDialog.show();
+			checkDialog.setOnDismissListener(new OnDismissListener() {
+
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					ReadAllCacheParams.this.cancel(true);
+				}
+
+			});
+
+		}
+
+		@Override
+		protected TransmitterManager doInBackground(Void... values) {
+
+			try {
+				tsmtManager.initAllParams();
+
+				SensorManager[] sensorManagers = tsmtManager
+						.getAllSensorManagers();
+
+				for (SensorManager sensorManager : sensorManagers) {
+					sensorManager.initAllParams();
+				}
+
+			} catch (Exception e) {
+				return null;
+			}
+
+			return tsmtManager;
+
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+
+			checkDialog.dismiss();
+			if (result == null) {
+
+				Toast.makeText(SensorService.this, "读取失败，请检查连接是否正常!",
+						Toast.LENGTH_SHORT).show();
+			} else
+
+				backEvents.notifyBackEvent(BackEventsType.CACHE_READ_ALL,
+						result);
+
+		}
+
+	}
+
+	/**
+	 * 写 多个配置的writeParamAsyncTask 这些属性都已经缓存了
+	 * 
+	 * @author Administrator
+	 * 
+	 */
+	private class WriteCacheParams extends
+			AsyncTask<Void, String, Map<String, Object>> {
+
+		private Map<String, Object> maps = null;
+
+		private Manager manager = null;
+
+		private ProgressDialog checkDialog = null;
+
+		public WriteCacheParams(Context context, Map<String, Object> maps,
+				Manager manager) {
+			super();
+
+			this.maps = maps;
+			this.manager = manager;
+			checkDialog = new ProgressDialog(context);
+			checkDialog.setMessage("正在写入数据...");
+			checkDialog.setCanceledOnTouchOutside(false);
+			checkDialog.show();
+			checkDialog.setOnDismissListener(new OnDismissListener() {
+
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					WriteCacheParams.this.cancel(true);
+				}
+
+			});
+
+		}
+
+		@Override
+		protected Map<String, Object> doInBackground(Void... values) {
+
+			for (String id : maps.keySet()) {
+
+				try {
+					manager.setParamValue(id, maps.get(id));
+					// this.publishProgress(id);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+			return maps;
+		}
+
+		// @Override
+		// protected void onProgressUpdate(String... values) {
+		// checkDialog.setMessage("正在写入"+values[0]);
+		// }
+
+		@Override
+		protected void onPostExecute(Map<String, Object> result) {
+
+			checkDialog.dismiss();
+			if (result == null) {
+
+				Toast.makeText(SensorService.this, "写入失败，请检查连接是否正常!",
+						Toast.LENGTH_SHORT).show();
+			} else
+				backEvents.notifyBackEvent(BackEventsType.CACHE_WRITE_VALUE,
+						result);
+
+		}
+	}
+
+	private class WriteAllCacheParams extends
+			AsyncTask<Void, String, List<Map<String, Object>>> {
+
+		private List<Map<String, Object>> maps = null;
+
+		private List<Manager> managers = null;
+
+		private ProgressDialog checkDialog = null;
+
+		public WriteAllCacheParams(Context context,
+				List<Map<String, Object>> maps, List<Manager> managers) {
+			super();
+
+			this.maps = maps;
+			this.managers = managers;
+			checkDialog = new ProgressDialog(context);
+			checkDialog.setMessage("正在写入数据...");
+			checkDialog.setCanceledOnTouchOutside(false);
+			checkDialog.show();
+			checkDialog.setOnDismissListener(new OnDismissListener() {
+
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					WriteAllCacheParams.this.cancel(true);
+				}
+
+			});
+
+		}
+
+		@Override
+		protected List<Map<String, Object>> doInBackground(Void... values) {
+
+			for (int i = 0; i < managers.size(); i++) {
+
+				for (String id : maps.get(i).keySet()) {
+
+					System.out.println("写入数据"+id);
+					try {
+						managers.get(i).setParamValue(id, maps.get(i).get(id));
+					} catch (Exception e) {
+						e.printStackTrace();
+						return null;
+					}
+				}
+
+			}
+
+			return maps;
+		}
+
+		@Override
+		protected void onPostExecute(List<Map<String, Object>> result) {
+
+			checkDialog.dismiss();
+			if (result == null) {
+
+				Toast.makeText(SensorService.this, "写入失败，请检查连接是否正常!",
+						Toast.LENGTH_SHORT).show();
+			} else
+				backEvents.notifyBackEvent(BackEventsType.CACHE_WRITE_ALL,
+						result);
+
+		}
+	}
+
+	public class ReadNoCacheParamCycle extends Thread {
+
+		private String id;
+		private SensorManager sensorManager;
+		private long time;
+		private int num = -1;
+		private boolean timeFlag = false;// 第一次 不等待 直接读取数据
+
+		private boolean flag = true;
+
+		Handler handler=new Handler();
+		public ReadNoCacheParamCycle(String id, SensorManager sensorManager,
+				long time, int num) {
+
+			this.id = id;
+			this.sensorManager = sensorManager;
+			this.time = time;
+			this.num = num;
+		}
+
+		public void run() {
+			
+
+			int hasNum = 0;// 已经读取的数据的个数
+
+			while (flag) {
+
+				if (timeFlag) {// 第一次 不睡眠
+
+					synchronized (this) {
+						try {
+							this.wait(time);
+							if (flag == false)
+								return;
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+
+				} else
+					timeFlag = true;
+
+				final Object value = getValue(id);
+
+				if (flag) {
+					handler.post(new Thread() {
+
+						@Override
+						public void run() {
+							System.out.println("进入post里面了哦");
+							backEvents.notifyBackEvent(
+									BackEventsType.NO_CACHE_VALUE, value);
+						}
+
+					});
+
+				}
+				hasNum++;
+
+				if (hasNum == num)
+					return;
+			}
+			
+		}
+
+		public Object getValue(String id) {
+
+			Object value = null;
+			try {
+				if (id.equals(Constants.NO_CACHE_ANALOG)) {
+					value = sensorManager.readAnalogResult();
+				} else if (id.equals(sensorManager.readResult1())) {
+					
+					
+				value = sensorManager.readResult1();
+					
+				} else if (id.equals(sensorManager.readResult2())) {
+					value = sensorManager.readResult2();
+				} else if (id.equals(sensorManager.readResult3())) {
+					value = sensorManager.readResult3();
+				} else if (id.equals(sensorManager.readResult4())) {
+					value = sensorManager.readResult4();
+				}
+
+			} catch (Exception e) {
+
+				if (e instanceof ErrorCodeException) {
+
+					
+					if (e.getMessage().equals("9")) {
+						
+						return "<" + sensorManager.scp.getSensorLeftValue();
+
+					} else {
+						
+						return ">"+ sensorManager.scp.getSensorRightValue();
+
+					}
+			}
+			}
+			System.out.println("value"+value);
+			return value;
+
+		}
+
+		/**
+		 * 销毁这个线程
+		 */
+		public void destory() {
+
+			flag = false;
+			synchronized (this) {
+				this.notify();
+			}
+
+		}
+
+	}
+
+	/**
+	 * 蓝牙连接
+	 * 
+	 * @param bluetoothSocket
+	 * @param slaveIdMin
+	 * @param slaveIdMax
+	 */
+	public void connectTransmitter(BluetoothSocket bluetoothSocket,
+			int slaveIdMin, int slaveIdMax, Context context) {
+
+		BluetoothMaster bluetoothMaster = new BluetoothMaster(bluetoothSocket);
+
+		new ConnectAsyncTask(context, bluetoothMaster, slaveIdMin, slaveIdMax)
+				.execute();
+
+	}
+
+	/**
+	 * USB连接
+	 * 
+	 * @param usbSerialDriver
+	 * @param slaveIdMin
+	 * @param slaveIdMax
+	 */
+	public void connectTransmitter(UsbSerialDriver usbSerialDriver,
+			int slaveIdMin, int slaveIdMax, Context context) {
+
+		USBMaster usbMaster = new USBMaster(usbSerialDriver);
+		new ConnectAsyncTask(context, usbMaster, slaveIdMin, slaveIdMax)
+				.execute();
+
+	}
+
+	/**
+	 * @param context
+	 *            初始化这个变送器所有配置
+	 * @param tsmtManager
+	 */
+	public void initAllParams(Context context, TransmitterManager tsmtManager) {
+
+		new ReadAllCacheParams(context, tsmtManager).execute();
+
+	}
+
+	public void writeAllParams(Context context, List<Manager> managers,
+			List<Map<String, Object>> maps) {
+		
+		new WriteAllCacheParams(context, maps, managers).execute();
+
+	}
+
+	/**
+	 * 读取变送器或者传感器的配置
+	 * 
+	 * @param context
+	 * @param ids
+	 * @param manager
+	 */
+	public void readCacheParams(Context context, String[] ids, Manager manager) {
+
+		new ReadCacheParams(context, ids, manager).execute();
+	}
+
+	/**
+	 * 写 变送器或者传感器的配置属性
+	 * 
+	 * @param context
+	 * @param maps
+	 * @param manager
+	 */
+	public void writeCacheParams(Context context, Map<String, Object> maps,
+			Manager manager) {
+
+		new WriteCacheParams(context, maps, manager).execute();
+
+	}
+
+	/**
+	 * @param context
+	 *            读那些没有缓存的属性（循环读那些结果值等）
+	 * @param id
+	 * @param sensorManager
+	 * @param time
+	 *            毫秒级别的时间
+	 */
+	public void startCycle(String id,
+			SensorManager sensorManager, long time, int num) {
+
+		if(rncpc!=null){
+			rncpc.destory();
+			rncpc=null;
+		}
+		
+		rncpc=new ReadNoCacheParamCycle(id,
+				sensorManager, time, num);
+		rncpc.start();
+
+	}
+	
+	public void destoryCycle(){
+		
+		if(rncpc!=null){
+			rncpc.destory();
+			rncpc=null;
+		}
+	}
+	
+	
+
+	@Override
+	public boolean onUnbind(Intent intent) {
+
+		disConnect();
+
+		return super.onUnbind(intent);
+	}
+	
+	public void disConnect(){
+		
+		if (masterProxy != null)
+			masterProxy.destroy();
+		masterProxy = null;
+	}
+
+}

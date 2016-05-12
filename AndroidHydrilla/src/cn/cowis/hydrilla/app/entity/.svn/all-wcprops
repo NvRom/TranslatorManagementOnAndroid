@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/project_transmitter/!svn/ver/582/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/entity
+END
+SensorManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/entity/SensorManager.java
+END
+CacheParams.java
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/entity/CacheParams.java
+END
+TransmitterManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 162
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/entity/TransmitterManager.java
+END
+Manager.java
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/entity/Manager.java
+END
+Constants.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/entity/Constants.java
+END
+SensorManagerFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/entity/SensorManagerFactory.java
+END

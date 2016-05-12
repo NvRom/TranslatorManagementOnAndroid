@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/classify"
+            android:text="@string/dema_group_input" />
+
+        <!-- input的温度 -->
+
+        <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+            android:id="@+id/dema_ph_input_value1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/view_size_small"
+            android:background="@drawable/bg_selector_shape_rect_layout"
+            
+            custom:labelName="@string/dema_ph_input_1" >
+        </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+
+        <!-- 第一组group -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             android:layout_marginLeft="@dimen/view_size_small"
+                android:layout_marginRight="@dimen/view_size_small"
+            android:orientation="vertical" >
+
+            <!-- 名称 -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_size_big"
+             
+                android:gravity="left|center_vertical"
+                android:text="@string/dema_ph_input_group_1"
+                android:textColor="#000"
+                android:textSize="@dimen/view_size_small" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+               
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <!-- 温度标定 -->
+
+                <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                    android:id="@+id/dema_ph_count1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_shape_rect_layout"
+                    
+                    custom:labelName="@string/dema_ph_count_1" >
+                </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+
+                <!-- 模拟量 -->
+
+                <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                    android:id="@+id/dema_ph_input_value2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_shape_rect_layout"
+                    
+                    custom:labelName="@string/dema_ph_input_2" >
+                </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 第二组group -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             android:layout_marginLeft="@dimen/view_size_small"
+                android:layout_marginRight="@dimen/view_size_small"
+            android:orientation="vertical" >
+
+            <!-- 名称 -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_size_big"
+               
+                android:gravity="left|center_vertical"
+                android:text="@string/dema_ph_input_group_2"
+                android:textColor="#000"
+                android:textSize="@dimen/view_size_small" />
+
+            <!-- 温度标定 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                    android:id="@+id/dema_ph_count2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_shape_rect_layout"
+                    
+                    custom:labelName="@string/dema_ph_count_1" >
+                </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+
+                <!-- 模拟量 -->
+
+                <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                    android:id="@+id/dema_ph_input_value3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_shape_rect_layout"
+                    
+                    custom:labelName="@string/dema_ph_input_2" >
+                </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 第三组group -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/view_size_small"
+            android:layout_marginRight="@dimen/view_size_small"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_size_big"
+                android:gravity="left|center_vertical"
+                android:text="@string/dema_ph_input_group_3"
+                android:textColor="#000"
+                android:textSize="@dimen/view_size_small" />
+
+            <!-- 温度标定 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                    android:id="@+id/dema_ph_count3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_shape_rect_layout"
+                    
+                    custom:labelName="@string/dema_ph_count_1" >
+                </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+
+                <!-- 模拟量 -->
+
+                <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                    android:id="@+id/dema_ph_input_value4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_shape_rect_layout"
+                    
+                    custom:labelName="@string/dema_ph_input_2" >
+                </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/dema_ph_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:text="@string/dema_dema_button"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+</ScrollView>

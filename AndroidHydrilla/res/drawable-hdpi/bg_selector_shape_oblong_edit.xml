@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 方形  的 editText 的事件形状 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item android:state_focused="true">
+		 <shape android:shape= "rectangle">
+		     <stroke android:width="3px" 
+		         android:color="#FF6103" />
+		     <solid android:color="#F8F8FF" />
+		</shape>
+	</item>
+    
+	<item android:state_pressed="true">
+		 <shape android:shape= "rectangle">
+		     <stroke android:width="3px" 
+		         android:color="#FF6103" />
+		     <solid android:color="#F8F8FF" />
+		</shape>
+	</item>
+	
+	<item >
+		 <shape android:shape= "rectangle">
+		    
+		            <stroke android:width="1px" 
+		                android:color="#C0C0C0" />
+		
+		            <solid android:color="#F8F8FF" />
+		</shape>
+	</item>
+</selector>

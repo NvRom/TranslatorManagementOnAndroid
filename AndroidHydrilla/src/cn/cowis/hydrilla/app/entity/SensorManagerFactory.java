@@ -1,0 +1,220 @@
+package cn.cowis.hydrilla.app.entity;
+
+
+
+import cn.cowis.hydrilla.app.entity.CacheParams.ParamType;
+import cn.cowis.modbus.entity.Sensor;
+
+public class SensorManagerFactory {
+
+	public static final short[] SENSOR_ALL_TYPE = new short[] { 0x0100, 0x0200,
+			0x0300, 0x0400, 0x0401, 0x0500, 0x0600, 0x0700, 0x0800 };
+
+	public static SensorManager[] getSensorManager(Sensor[] sensors) {
+
+	
+		Sensor sensor = null;
+		
+		SensorManager[] sensorManagers = new SensorManager[sensors.length];
+		
+		int temPosition=-1,mainPosition=-1;
+
+		for (int i = 0; i < sensors.length; i++) {
+
+			SensorParamsNameType spn  = new SensorParamsNameType();
+			
+			OtherInfo oi=new OtherInfo();
+			
+			sensor = sensors[i];
+
+			if (sensor.getSensorType() == SENSOR_ALL_TYPE[0]) {
+
+				spn.demaParamsName = new String[] { "热敏电阻系数/K" };
+				spn.inputParamsName = new String[] { "标定温度0/℃", "标定电阻0/kΩ",
+						"标定温度1/℃", "标定电阻1/kΩ" };
+				spn.otherParamsName = new String[] { "分压电阻/kΩ" };
+				
+				oi.name="温度";
+				oi.units=new String[]{"℃"};
+				oi.analogNum=3;
+				oi.analogUnit="kΩ";
+				
+				temPosition=i;
+
+			} else if (sensor.getSensorType() == SENSOR_ALL_TYPE[1]) {
+
+				spn.compensateParamsName = new String[] { "补偿温度/℃" };
+				spn.demaParamsName = new String[] { "当前温度下拟合截距值/mV",
+						"当前温度下拟合斜率值/mV", "百分理论斜率/%" };
+				spn.inputParamsName = new String[] { "标定状态温度/℃", "B4溶液下的电动势",
+						"B6溶液下的电动势", "B9溶液下的电动势" };
+				spn.compensateParamsType=new ParamType[]{ParamType.T};
+				
+				oi.name="pH";
+				oi.units=new String[]{""};
+				oi.analogNum=1;
+				oi.analogUnit="mV";
+				
+				mainPosition=i;
+
+			} else if (sensor.getSensorType() == SENSOR_ALL_TYPE[2]) {
+
+				spn.compensateParamsName = new String[] { "补偿温度/℃",
+						"电导率补偿系数/℃-1" };
+				
+				spn.compensateParamsType=new ParamType[]{ParamType.T,ParamType.OTHER};//跟上面一一对应 懒得写MAP了不好意思啊
+				
+				spn.demaParamsName = new String[] { "电导池常数/cm-1", "盐含量折算系数" };
+
+				spn.inputParamsName = new String[] { "标定状态温度/℃", "电极标定阻抗响应值/Ω" };
+				spn.otherParamsName = new String[] { "分压电阻/Ω" };
+				
+				oi.name="电导率";
+				oi.units=new String[]{"μS/cm"};
+				oi.analogNum=1;
+				oi.analogUnit="Ω";
+				
+				mainPosition=i;
+				
+			} else if (sensor.getSensorType() == SENSOR_ALL_TYPE[3]) {
+
+				spn.compensateParamsName = new String[] { "补偿温度/℃", "气压补偿/kPa",
+						"电导率即盐度补偿/(μS/cm)" };
+				
+				spn.compensateParamsType=new ParamType[]{ParamType.T,ParamType.P,ParamType.EC};
+				
+				spn.demaParamsName = new String[] { "活化系数/K", "指前因子/(nA/kPa)" };
+				spn.correctParamsName = new String[] { "电极残余电流调零校正斜率/(nA/℃)",
+						"电极残余电流调零校正截距/nA" };
+				spn.inputParamsName = new String[] { "标定气压值/kPa", "标定温度1/℃",
+						"标定电流1/nA", "标定温度2/℃", "标定电流2/nA" };
+				spn.otherParamsName = new String[] { "采样电阻/kΩ(MΩ)" };
+				
+				oi.name="极谱式溶解氧";
+				oi.units=new String[]{"mg/L"};
+				oi.analogNum=1;
+				oi.analogUnit="nA";
+				
+				mainPosition=i;
+				
+			} else if (sensor.getSensorType() == SENSOR_ALL_TYPE[4]) {
+
+				spn.compensateParamsName = new String[] { "补偿温度/℃", "气压补偿/kPa",
+						"电导率即盐度补偿/(μS/cm)" };
+				spn.compensateParamsType=new ParamType[]{ParamType.T,ParamType.P,ParamType.EC};
+				
+				spn.demaParamsName = new String[] { "活化系数/K", "指前因子/(μA/kPa)" };
+				spn.correctParamsName = new String[] { "电极残余电流调零校正斜率/(μA/℃)",
+						"电极残余电流调零校正截距/μA" };
+				spn.inputParamsName = new String[] { "标定气压值/kPa", "标定温度1/℃",
+						"标定电流1/μA", "标定温度2/℃", "标定电流2/μA" };
+				
+				oi.name="原电池溶解氧";
+				oi.units=new String[]{"mg/L"};
+				oi.analogNum=2;
+				oi.analogUnit="μA";
+				
+				mainPosition=i;
+				
+			} else if (sensor.getSensorType() == SENSOR_ALL_TYPE[5]) {
+
+				spn.demaParamsName = new String[] { "标定电流/mA", "校准液浊度值/NTU",
+						"标定电流/mA", "校准液浊度值/NTU" };
+				spn.otherParamsName = new String[] { "采样电阻/Ω" };
+				
+				oi.name="浊度";
+				oi.units=new String[]{"NTU"};
+				oi.analogNum=3;
+				oi.analogUnit="Ω";
+				
+				mainPosition=i;
+				
+			} else if (sensor.getSensorType() == SENSOR_ALL_TYPE[6]) {
+
+				spn.compensateParamsName = new String[] { "补偿温度/℃" };
+				spn.compensateParamsType=new ParamType[]{ParamType.T};
+				spn.demaParamsName = new String[] { "参比电极温补公式常数", "参比电极温补公式斜率" };
+				
+				oi.name="orp";
+				oi.units=new String[]{"mV"};
+				oi.analogNum=1;
+				oi.analogUnit="";
+				
+				mainPosition=i;
+
+			} else if (sensor.getSensorType() == SENSOR_ALL_TYPE[7]) {
+
+				spn.compensateParamsName = new String[] { "补偿温度/℃",
+						"电导率/(μS/cm)", "pH", "K+活度 /(mol/L)", "Na+活度 /(mol/L)" };
+				
+				spn.compensateParamsType=new ParamType[]{ParamType.T,ParamType.EC,ParamType.PH,ParamType.OTHER,ParamType.OTHER};
+				
+				spn.demaParamsName = new String[] {};
+				
+				oi.name="NH4+离子";
+				oi.units=new String[]{"mg/L"};
+				oi.analogNum=1;
+				oi.analogUnit="mV";
+				
+				mainPosition=i;
+				
+			} else {// 其他类型不识别
+				
+			}
+			sensorManagers[i]=new SensorManager(sensor, spn,oi);
+		}
+		
+		if(temPosition>=0&&mainPosition>=0){
+			
+			sensorManagers[mainPosition].setTemSlave(sensorManagers[temPosition]);
+			
+		}
+		
+		return sensorManagers;
+
+	}
+
+	public static class SensorParamsNameType {
+
+		public String[] compensateParamsName = new String[0];// 补偿参数位置
+		
+		public ParamType[] compensateParamsType=new ParamType[0];//里面每个参数的类型
+
+		public String[] demaParamsName = new String[0]; // 标定参数位置
+
+		public String[] correctParamsName  = new String[0];// 矫正参数位置
+
+		public String[] inputParamsName  = new String[0]; // 输入参数位置
+
+		public String[] otherParamsName  = new String[0]; // 其他参数位置
+
+		public SensorParamsNameType(String[] compensateParamsName,
+				ParamType[] compensateParamsType,
+				String[] demaParamsName, String[] correctParamsName,
+				String[] inputParamsName, String[] otherParamsName) {
+
+			this.compensateParamsName = compensateParamsName;
+			this.compensateParamsType=compensateParamsType;
+			this.demaParamsName = demaParamsName;
+			this.correctParamsName = correctParamsName;
+			this.inputParamsName = inputParamsName;
+			this.otherParamsName = otherParamsName;
+		}
+		
+		public SensorParamsNameType(){
+			
+		}
+	}
+	
+	public static class OtherInfo{
+		
+		public String name;
+		
+		public String[] units;
+		
+		public int analogNum;
+		
+		public String analogUnit;
+	}
+
+}

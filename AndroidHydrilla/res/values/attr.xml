@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 这个的功能 我就他妈的不解释了 -->
+<resources>
+    
+    
+    <declare-styleable name="InputValue">
+        <attr name="defaultValue" format="integer"/>
+        <attr name="max" format="integer"/>
+        <attr name="min" format="integer"/>
+    </declare-styleable>
+    
+    
+     <!-- LinearLayout 的按钮形式 -->
+    <declare-styleable name="LinearLayoutButton">
+        <attr name="buttonName" format="string"></attr>
+        <attr name="customfontSize" format="integer"></attr>
+    </declare-styleable>
+    
+    <!--  LinearLayout 的输入形式 -->
+    <declare-styleable name="LinearLayoutInput">
+        <attr name="labelName" format="string"></attr>
+        
+        <attr name="defaultInputValue" format="string"></attr>
+    </declare-styleable>
+    
+    
+    <!-- spinner的组合 -->
+    <declare-styleable name="LinearLayoutSpinner">
+        <attr name="labelSpinner" format="string"></attr>
+        
+    </declare-styleable>
+   
+   
+    
+</resources>

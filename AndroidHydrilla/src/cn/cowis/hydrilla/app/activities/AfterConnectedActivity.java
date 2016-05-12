@@ -1,0 +1,255 @@
+package cn.cowis.hydrilla.app.activities;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.RoboGuice;
+import org.androidannotations.annotations.ViewById;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.Toast;
+import cn.cowis.hydrilla.app.Dialogs;
+import cn.cowis.hydrilla.app.MyRoboApplication;
+import cn.cowis.hydrilla.app.R;
+import cn.cowis.hydrilla.app.connected.activities.DetailParamsActivity_;
+import cn.cowis.hydrilla.app.connected.fragments.CheckSensorFragment_;
+import cn.cowis.hydrilla.app.connected.fragments.ConfigTsmtFragment_;
+import cn.cowis.hydrilla.app.connected.fragments.DemaSensorFragment_;
+import cn.cowis.hydrilla.app.entity.TransmitterManager;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.inject.Inject;
+
+
+/**
+ * @author Administrator 整个 连接过后的所有 标定界面的初始
+ */
+
+@EActivity(R.layout.after_connected_tab)
+@RoboGuice
+public class AfterConnectedActivity extends SherlockFragmentActivity implements
+		ActionBar.OnNavigationListener {
+
+	private long mExitTime;
+	@ViewById(R.id.layout_setting_content)
+	LinearLayout layoutContent; // fragment 里面的内容
+	@ViewById(R.id.radio_config)
+	RadioButton radioConfig; // 按钮 参数配置
+	@ViewById(R.id.radio_dema)
+	RadioButton radioDema;// 标定
+	@ViewById(R.id.radio_check)
+	RadioButton radioCheck;// 检测
+//	@ViewById(R.id.view_pager)
+	private FragmentManager fragmentManager;
+	
+	@Inject
+	Dialogs dialog;
+
+	MyRoboApplication myApp = null;
+
+	@Override
+	protected void onCreate(Bundle arg0) {
+
+		super.onCreate(arg0);
+		// setTheme(R.style.Theme_Sherlock);
+		myApp = ((MyRoboApplication) getApplicationContext());
+		List<TransmitterManager> listTsmt = myApp.listTsmt;
+
+		List<String> listNames = new ArrayList<String>();
+		for (TransmitterManager tsmt : listTsmt) {
+
+			listNames.add("变送器(" + tsmt.tcp.getProductId() + ")");
+		}
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setDisplayUseLogoEnabled(true);
+		getSupportActionBar().setDisplayShowTitleEnabled(true);
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);// 默认软键盘不弹出
+
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);// 不自动锁屏
+		// 在actionbar 中加一个下拉列表
+		Context context = getSupportActionBar().getThemedContext();
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+				R.layout.spinner_item_stypelayout, listNames);
+
+		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		getSupportActionBar().setListNavigationCallbacks(adapter, this);
+
+		forceShowOverflowMenu();
+	}
+
+	@AfterViews
+	public void init() {
+
+		fragmentManager = getSupportFragmentManager();
+		// FragmentTransaction transaction = fragmentManager.beginTransaction();
+		// transaction.replace(R.id.layout_setting_content,
+		// new ConfigTsmtFragment_());
+		// transaction.disallowAddToBackStack();
+		// radioConfig.setChecked(true);
+		// transaction.commit();
+		// changeFragment(new ConfigTsmtFragment_(),radioConfig);
+	}
+
+	private void changeFragment(Fragment fragment, RadioButton radio, int resId) {
+
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(R.id.layout_setting_content, fragment);
+		transaction.disallowAddToBackStack();
+		radio.setChecked(true);
+		transaction.commit();
+
+		getSupportActionBar().setTitle(resId);
+	}
+
+	/**
+	 * 配置界面
+	 */
+	@Click(R.id.radio_config)
+	public void config(View view) {
+
+		// setTitleName(R.string._config);
+
+		changeFragment(new ConfigTsmtFragment_(), radioConfig, R.string._config);
+	}
+
+	/**
+	 * 标定界面
+	 * 
+	 * @param view
+	 */
+	@Click(R.id.radio_dema)
+	public void dema(View view) {
+
+		// setTitleName(R.string._dema);
+
+		changeFragment(new DemaSensorFragment_(), radioDema, R.string._dema);
+
+	}
+
+	/**
+	 * 检测界面
+	 * 
+	 * @param view
+	 */
+	@Click(R.id.radio_check)
+	public void result(View view) {
+
+		// setTitleName(R.string._check);
+		changeFragment(new CheckSensorFragment_(), radioCheck, R.string._check);
+
+	}
+
+	public Dialogs getDialog() {
+		return dialog;
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			if ((System.currentTimeMillis() - mExitTime) > 2000) {// 如果两次按键时间间隔大于2000毫秒，则不退出
+				Toast.makeText(this, "再按一次退出连接", Toast.LENGTH_SHORT).show();
+				mExitTime = System.currentTimeMillis();// 更新mExitTime
+			} else {
+				
+				disConnect();
+				
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+
+		myApp.setCurrectTransmitterManager(itemPosition);
+
+		changeFragment(new ConfigTsmtFragment_(), radioConfig, R.string._config);
+
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		getSupportMenuInflater().inflate(R.menu.after_connected_menu, menu);
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+
+		case R.id.disconnect:
+
+			finish();// 退出这个界面
+			myApp.sensorClient.sensorService.disConnect();// 断开连接
+
+			disConnect();
+
+			break;
+
+		case R.id.detail_tsmt:
+
+			Intent intent2 = new Intent(this, DetailParamsActivity_.class);
+			startActivity(intent2);
+			break;
+		}
+		return true;
+	}
+	
+	private void forceShowOverflowMenu() {
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class
+					.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void disConnect(){
+		
+		Intent intent = null;
+		if (myApp.isBlueToothConnect()) {// 如果是蓝牙连接
+
+			intent = new Intent(this, BluetoothActivity_.class);
+
+		} else
+			intent = new Intent(this, UsbActivity_.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+
+}

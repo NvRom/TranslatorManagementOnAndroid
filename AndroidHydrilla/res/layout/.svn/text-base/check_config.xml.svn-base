@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <!-- 补偿设置  这个模块动态显示 可能没有 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical" >
+        
+        
+        <!-- 检测设置 -->
+        
+        <cn.cowis.hydrilla.view.CustomLinearLayoutButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/check_param_button"
+            custom:buttonName="@string/check_param_group2"
+            android:background="@drawable/bg_selector_shape_rect_layout"
+            
+            >
+            
+        </cn.cowis.hydrilla.view.CustomLinearLayoutButton>
+        
+        
+        <!-- 检测设置控制的LinearLayout -->
+        <LinearLayout 
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/view_size_small"
+            android:layout_marginRight="@dimen/view_size_small"
+            android:id="@+id/check_param_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+              android:background="@drawable/bg_selector_shape_rect_layout"
+            android:orientation="vertical"
+            >
+            <!--
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/check_param_nh4"
+                >
+            -->
+            <!-- 测定项目
+           <cn.cowis.hydrilla.view.CustomLinearLayoutSpinner
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:orientation="horizontal"
+                 custom:labelSpinner="@string/check_project"
+                 android:id="@+id/spinner_project"
+                 android:background="@drawable/bg_selector_nostroke_layout"
+               >
+               
+           </cn.cowis.hydrilla.view.CustomLinearLayoutSpinner>
+            
+           <TextView 
+               style="@style/line"
+               />
+            -->
+             <!-- 检测方法 
+            <cn.cowis.hydrilla.view.CustomLinearLayoutSpinner
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:orientation="horizontal"
+                 custom:labelSpinner="@string/check_method"
+                 android:id="@+id/spinner_method"
+                 android:background="@drawable/bg_selector_nostroke_layout"
+               >
+               
+           </cn.cowis.hydrilla.view.CustomLinearLayoutSpinner>
+            
+           <TextView 
+               style="@style/line"
+               />
+           </LinearLayout>
+           -->
+           <!-- 温度补偿 
+           <LinearLayout
+               android:background="@drawable/bg_selector_nostroke_layout"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_gravity="center_vertical"
+               >
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="wrap_content"
+                   android:gravity="left|center_vertical" 
+                   android:layout_margin="10dp"
+                   android:text="@string/check_t"
+                   />
+               
+               <RadioGroup
+                   android:orientation="horizontal"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" 
+                   android:layout_marginRight="10dp"
+                    android:layout_gravity="center_vertical"
+                   >
+                   <RadioButton 
+                       android:id="@+id/radio_auto"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="@string/t_auto"
+                       />
+                   
+                     <RadioButton 
+                       android:id="@+id/radio_hand"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="@string/t_hand"
+                       />
+                   
+               </RadioGroup>
+               
+           </LinearLayout>
+           
+             <TextView 
+               style="@style/line"
+               />
+           
+           
+         -->
+           
+             <!-- 数值单位 
+            <cn.cowis.hydrilla.view.CustomLinearLayoutSpinner
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:orientation="horizontal"
+                 custom:labelSpinner="@string/check_unit"
+                 android:id="@+id/spinner_unit"
+                 android:background="@drawable/bg_selector_nostroke_layout"
+               >
+               
+           </cn.cowis.hydrilla.view.CustomLinearLayoutSpinner>
+            
+           <TextView 
+               style="@style/line"
+               />
+           -->
+           
+               <!-- 数值修约 
+            <cn.cowis.hydrilla.view.CustomLinearLayoutSpinner
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:orientation="horizontal"
+                 custom:labelSpinner="@string/check_round"
+                 android:id="@+id/spinner_round"
+                 android:background="@drawable/bg_selector_nostroke_layout"
+               >
+               
+           </cn.cowis.hydrilla.view.CustomLinearLayoutSpinner>
+            
+           <TextView 
+               style="@style/line"
+               />
+           -->
+               <!-- 测定周期-->
+               
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:orientation="horizontal" 
+                 android:layout_height="wrap_content"
+                 android:background="@drawable/bg_selector_nostroke_layout"
+                 >
+                 
+           
+         
+              <cn.cowis.hydrilla.view.CustomLinearLayoutHandInput
+                    android:id="@+id/check_period"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    custom:defaultInputValue="1"
+                    custom:labelName="@string/check_period" >
+                </cn.cowis.hydrilla.view.CustomLinearLayoutHandInput>
+
+              
+                <Spinner
+                    android:id="@+id/check_period_unit"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:dropDownVerticalOffset="1px"
+                    android:dropDownWidth="65dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+            
+             
+               <TextView 
+               style="@style/line"
+               />
+               
+               
+               <!-- 检测方式 -->
+               
+               <LinearLayout
+                   android:layout_height="wrap_content" 
+                   android:layout_width="match_parent"
+                   android:background="@drawable/bg_selector_nostroke_layout"
+                   android:orientation="vertical"
+                   >
+                   
+              
+               
+               <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/margin_5"
+                android:gravity="center_vertical"
+                android:text="检测方式"
+                android:textColor="#000"
+                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="vertical" >
+
+                <!-- 实时动态 -->
+
+                <RadioButton
+                    android:id="@+id/radio_dyn"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:gravity="center_vertical"
+                    android:text="实时动态检测 " />
+
+               
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radio_num"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="按次数检测" />
+
+                    <cn.cowis.hydrilla.view.CustomTextViewButton
+                        android:id="@+id/custom_times"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        custom:defaultValue="20"
+                        custom:max="10000"
+                        custom:min="1" >
+                    </cn.cowis.hydrilla.view.CustomTextViewButton>
+                </LinearLayout>
+            </LinearLayout>
+          </LinearLayout>   
+               
+            
+      </LinearLayout>
+        
+        
+        
+        <!-- 补偿设置 -->
+        
+        
+         <cn.cowis.hydrilla.view.CustomLinearLayoutButton
+             android:layout_marginTop="5dp"
+             android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/check_comp_button"
+            custom:buttonName="@string/check_param_group1"
+              android:background="@drawable/bg_selector_shape_rect_layout"
+           
+            >
+            
+        </cn.cowis.hydrilla.view.CustomLinearLayoutButton> 
+
+            <LinearLayout
+                android:background="@drawable/bg_selector_shape_rect_layout"
+                android:id="@+id/check_comp_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/view_size_small"
+                android:layout_marginRight="@dimen/view_size_small"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+       
+
+            
+
+            <Button
+                android:id="@+id/result_sure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="开始检测"
+                android:textSize="22sp" />
+            
+            
+            
+            
+        </LinearLayout>
+
+        <!-- 检测数量 -->
+
+
+        <!-- 确定按钮 -->
+
+ 
+
+  
+
+</ScrollView>

@@ -1,0 +1,144 @@
+package cn.cowis.hydrilla.app.connected.activities;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
+import cn.cowis.hydrilla.app.R;
+import cn.cowis.hydrilla.app.charts.ResultChartManager;
+import cn.cowis.hydrilla.app.parent.SuperSensorActivity;
+import cn.cowis.hydrilla.app.service.BackEvents.BackEventsType;
+import cn.cowis.hydrilla.app.service.BackEvents.OnBackListener;
+import cn.cowis.hydrilla.util.ToolUtil;
+
+/**
+ * 检测结果
+ * 
+ * @author Administrator
+ */
+@EActivity(R.layout.check_result)
+public class CheckResultActivity extends SuperSensorActivity implements
+		OnBackListener {
+
+	// private SensorManager sensorManager = null;
+	// 折线的样式
+	// private String[] titles= null;
+
+	// 建立结果值曲线
+	ResultChartManager chartManager = null;
+
+	// 放chart 的位置
+	@ViewById(R.id.check_result_chart)
+	ViewFlipper chartFlipper;
+
+	@ViewById(R.id.check_result_name)
+	TextView resultName;
+
+	@ViewById(R.id.check_result_value)
+	TextView resultValue;
+
+	@ViewById(R.id.check_result_name_average)
+	TextView resultNameVag;
+
+	@ViewById(R.id.check_result_value_average)
+	TextView resultValueVag;
+
+	int interval, num,h, resultNum;// 水平方向(秒)
+	double total, real, avg, x;
+	
+	@AfterViews
+	public void init() {
+		resultNum=sensorManager.scp.getCurrentResultNum();
+		
+		Bundle bundle = getIntent().getExtras();
+
+		interval = bundle.getInt("interval");
+		num = bundle.getInt("num");
+
+		String sensorName = sensorManager.scp.name;
+		String unit = sensorManager.scp.getCurrentUnit();
+
+		if ("".equals(unit)) {
+			unit = "";
+		} else {
+			unit = "/" + unit;
+		}
+
+		setTitleName(sensorName + "电极检测结果");// 设置标题
+
+		resultName.setText(sensorName + "实时结果" + unit + ":");
+		resultNameVag.setText(sensorName + "累次平均值 " + unit + ":");
+
+		chartManager = new ResultChartManager(this, sensorManager);
+
+		View chartView = chartManager.createChart(sensorName + "动态检测曲线图", "时间/s", sensorName + unit, new String[] { "实时值", "平均值" },2);
+
+		chartFlipper.addView(chartView);
+
+	}
+
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		myApp.sensorClient.sensorService.backEvents.addBackListener(this);
+		
+		myApp.sensorClient.sensorService.startCycle(sensorManager.scp.getResultId(), sensorManager, interval*1000, num);
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		
+		myApp.sensorClient.sensorService.backEvents.removeBackListener(this);
+		
+		myApp.sensorClient.sensorService.destoryCycle();
+	}
+
+	@Override
+	public void onDroneEvent(BackEventsType event, Object object) {
+
+		
+
+		switch (event) {
+		case NO_CACHE_VALUE:
+
+			if (object == null) {
+				Toast.makeText(myApp, "通信有误!", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			x = h++ * interval;
+			
+			if (object instanceof String) {
+
+				resultValue.setText(object.toString());// 时时值
+				
+				System.out.println("x="+x);
+				
+				chartManager.upDateChart(x, ToolUtil.getNaN(), avg);
+				// resultValueVag.setText(object.toString());//平均值
+			} else {
+
+				
+				real = ToolUtil.roundValue((Double) object, resultNum);
+
+				total = real + total;
+				avg = ToolUtil.roundValue(total / h, resultNum);
+
+				chartManager.upDateChart(x, real, avg);// 更新曲线
+
+				resultValue.setText(ToolUtil.roundTOString(real, resultNum));// 时时值
+				resultValueVag.setText(ToolUtil.roundTOString(avg, resultNum));// 平均值
+			}
+		}
+
+	}
+
+}

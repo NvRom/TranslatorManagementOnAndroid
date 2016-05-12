@@ -1,0 +1,42 @@
+package cn.cowis.hydrilla.app.service;
+
+
+
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
+
+import android.bluetooth.BluetoothSocket;
+
+
+/**
+ * @author Administrator
+ *
+ *连接变送器  并获得变送器中的各种属性值
+ */
+public interface Connection {
+
+	/**
+	 * 蓝牙连接（这种方式 是第一次连接）
+	 * @param bluetoothSocket
+	 */
+	void bluetoothConnect(BluetoothSocket bluetoothSocket,int slaveIdMin,int slaveIdMax);
+	
+	/**
+	 * 重新连接
+	 */
+	void bluetoothConnect();
+	
+	/**
+	 * 通过usb连接(第一次连接)
+	 * @param usbSerialDriver
+	 */
+	void usbConnect(UsbSerialDriver usbSerialDriver,int slaveIdMin,int slaveIdMax);
+	
+	/**
+	 * 重新连接
+	 */
+	void usbConnect();
+	
+	void destory();
+	
+	
+}

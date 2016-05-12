@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/activities
+END
+AfterConnectedActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 170
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/activities/AfterConnectedActivity.java
+END
+MainActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/activities/MainActivity.java
+END
+BluetoothActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/activities/BluetoothActivity.java
+END
+UsbActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/activities/UsbActivity.java
+END

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/project_transmitter/!svn/ver/582/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/service
+END
+BackEvents.java
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/service/BackEvents.java
+END
+SensorClient.java
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/service/SensorClient.java
+END
+SensorService.java
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/service/SensorService.java
+END

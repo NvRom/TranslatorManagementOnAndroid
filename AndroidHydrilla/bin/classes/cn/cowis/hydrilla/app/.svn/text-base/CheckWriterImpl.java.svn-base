@@ -1,0 +1,900 @@
+package cn.cowis.hydrilla.app.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.io.Serializable;
+import java.lang.Math;
+
+import com.google.inject.Inject;
+
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.widget.TextView;
+import android.widget.Toast;
+import cn.cowis.hydrilla.app.connected.activities.CheckResultActivity_;
+import cn.cowis.hydrilla.app.entity.SensorManager;
+import cn.cowis.hydrilla.util.Similarity;
+import cn.cowis.hydrilla.util.Tools;
+import cn.cowis.modbus.exception.TransferException;
+
+public class CheckWriterImpl implements CheckWriter {
+
+	@Inject
+	Context context;
+
+	/**
+	 * 这个是不用说是标定所需要的小东西
+	 * 
+	 * @author Administrator
+	 * 
+	 *         双哥
+	 * 
+	 */
+	public class DemaAsyncTask extends AsyncTask<String[], Integer, Object> {
+
+		static final int CHECK_INPUT = 0;
+		static final int WRITER_INPUT = 1;
+
+		static final int INPUT_ERROR_TIP = 0;
+		static final int WRITER_ERROR_TIP = 1;
+		static final int SAVE_SUCCESS_TIP = 2;
+
+		String[] titles = new String[] { "系统正在验证输入的参数...",
+				"系统正在写入标定参数和读取标定结果..." };
+
+		String[] tips = new String[] { "输入有误！", "读写参数发生错误！", "保存成功!" };
+
+		SensorManager sensorManager = null;
+		Class intentClass = null;
+		
+		int position=0;
+
+		private ProgressDialog checkDialog = new ProgressDialog(context);
+
+		public DemaAsyncTask(SensorManager sensorManager, Class intentClass,int position) {
+			super();
+
+			this.sensorManager = sensorManager;
+			this.intentClass = intentClass;
+			this.position=position;
+			
+			checkDialog.show();
+		}
+
+		@Override
+		protected Object doInBackground(String[]... strs) {
+			publishProgress(CHECK_INPUT);
+
+			float[] inputValues = new float[0];
+			try {
+				if (sensorManager.isPhSensor()) {
+
+					inputValues = testPhInputDema(strs[0]);
+
+				} else if (sensorManager.isDoSensor()) {
+
+					inputValues = testDoInputDema(strs[0]);
+				} else {
+
+					inputValues = testInput(strs[0]);
+				}
+
+			} catch (Exception e) {
+				return INPUT_ERROR_TIP;
+			}
+			publishProgress(WRITER_INPUT);
+
+			
+			float[] values = null;
+			try {
+
+				if (sensorManager.isTbSensor()) {
+					// 是Tb的话，直接往里写。这里的inputValues不是输入参数，我把它当做紫红色底纹的标定参数了，写在标定参数位置
+
+					writeTbParams(sensorManager, inputValues);
+
+				}
+
+				values = inputAndDemaParams(sensorManager, inputValues);
+
+			} catch (Exception e) {
+				return WRITER_ERROR_TIP;
+			}
+			return values;
+
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+
+			checkDialog.setMessage(titles[values[0]]);
+
+			// super.onProgressUpdate(values);
+			//
+			// textView.setText(String.valueOf("value="+values.toString()));
+		}
+
+		protected void onPostExecute(Object result) {
+
+			checkDialog.dismiss();
+			
+			if(result==null){//成功
+				Toast.makeText(context, tips[2], Toast.LENGTH_SHORT).show();//保存成功
+			}else if(result instanceof Integer){//失败
+				
+				Toast.makeText(context, tips[(Integer) result], Toast.LENGTH_SHORT).show();//保存成功
+			}else if(result instanceof float[]){//成功并且跳转
+				Intent intent =new Intent(context, intentClass);
+				
+				Bundle bundle=new Bundle();
+				bundle.putFloatArray("dema", (float[]) result);
+				bundle.putInt("position", position);
+				intent.putExtras(bundle);
+				context.startActivity(intent);
+				
+			}
+			
+			
+			
+			// if(result==2){//保存成功了 那么就跳转数据
+			// Intent intent =new Intent(context, CheckResultActivity_.class);
+			// intent.putExtra("position", position);
+			// intent.putExtra("num", num);
+			// intent.putExtra("interval", interval);
+			//
+			// context.startActivity(intent);
+			//
+			// }
+			// Toast.makeText(context, tips[result], Toast.LENGTH_SHORT).show();
+
+		}
+
+	}
+
+	/**
+	 * 这个是点击检测按钮出现的结果
+	 * 
+	 * @author Administrator
+	 * 
+	 *         双哥
+	 * 
+	 */
+	public class CheckAsyncTask extends AsyncTask<String[], Integer, Integer> {
+
+		static final int CHECK_INPUT = 0;
+		static final int WRITER_INPUT = 1;
+
+		static final int INPUT_ERROR_TIP = 0;
+		static final int WRITER_ERROR_TIP = 1;
+		static final int SAVE_SUCCESS_TIP = 2;
+
+		String[] titles = new String[] { "系统正在验证输入的参数...", "系统正在写入补偿参数..." };
+
+		String[] tips = new String[] { "输入有误！", "写补偿参数发生错误！", "保存成功!" };
+
+		int interval = 0;
+		int num = 0;
+		int position = 0;
+
+		SensorManager sensorManager = null;
+
+		private ProgressDialog checkDialog = new ProgressDialog(context);
+
+		public CheckAsyncTask(SensorManager sensorManager, int interval,
+				int num, int position) {
+
+			super();
+
+			this.sensorManager = sensorManager;
+			this.interval = interval;
+			this.num = num;
+
+			this.position = position;
+			
+			checkDialog.show();
+		}
+
+		@Override
+		protected Integer doInBackground(String[]... strs) {
+			publishProgress(CHECK_INPUT);
+
+			
+			
+			float[] inputCompValues = new float[0];
+			
+			try {
+				inputCompValues = testInput(strs[0]);
+			} catch (Exception e) {
+				return INPUT_ERROR_TIP;
+			}
+			publishProgress(WRITER_INPUT);
+
+			if(inputCompValues.length!=0){
+			 try {
+				 inputCompValues(sensorManager, inputCompValues);
+			 } catch (Exception e) {
+				 return WRITER_ERROR_TIP;
+			 }
+			}
+			return SAVE_SUCCESS_TIP;
+
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+
+			checkDialog.setMessage(titles[values[0]]);
+
+			// super.onProgressUpdate(values);
+			//
+			// textView.setText(String.valueOf("value="+values.toString()));
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+
+			checkDialog.dismiss();
+			if (result == 2) {// 保存成功了 那么就跳转数据
+				Intent intent = new Intent(context, CheckResultActivity_.class);
+				intent.putExtra("position", position);
+				intent.putExtra("num", num);
+				intent.putExtra("interval", interval);
+
+				context.startActivity(intent);
+
+			}
+			Toast.makeText(context, tips[result], Toast.LENGTH_SHORT).show();
+
+		}
+
+	}
+
+	@Override
+	public void demaInputWriter(SensorManager sensorManager,String [] strs, Class intentClass,int position)
+	{
+		
+		new DemaAsyncTask(sensorManager,intentClass,position).execute(strs);
+	
+	}
+
+	/*
+	 * (non-Javadoc) 验证compsate参数
+	 * 
+	 * @see
+	 * cn.cowis.hydrilla.app.service.CheckWriter#compensateWriter(cn.cowis.hydrilla
+	 * .app.entity.SensorManager, java.lang.String[], int, int, int)
+	 */
+	@Override
+	public void compensateWriter(SensorManager sensorManager,
+			String[] compStrs, int interval, int num, int position) {
+
+		new CheckAsyncTask(sensorManager, interval, num, position)
+				.execute(compStrs);
+
+	}
+
+	/**
+	 * 溶解氧标定 有特殊 (可能是单点 可能是两点)
+	 * 
+	 * @param textViews
+	 * @return
+	 * @throws Exception
+	 */
+	private float[] testDoInputDema(String[] strs) throws Exception {
+
+		float[] values = new float[] { getNaN(), getNaN(), getNaN(), getNaN(),
+				getNaN() };
+
+		float[] actualValues = testInput(strs);
+
+		System.arraycopy(actualValues, 0, values, 0, actualValues.length);
+
+		return values;
+
+	}
+
+	/**
+	 * 标定的时候 ph的输入参数 验证 特殊 至少两个？？？？？？？？？？？？？？？？？？？
+	 * 
+	 * @param textViews
+	 * @return
+	 * @throws Exception
+	 */
+	private float[] testPhInputDema(String[] strs) throws Exception {
+
+		int demaPoint = 0;
+
+		float[] values = new float[strs.length];
+
+		try {
+			values[0] = Float.parseFloat(strs[0]);
+
+		} catch (Exception e) {
+			throw new Exception();
+		}
+		try {
+			values[1] = Float.parseFloat(strs[1]);
+			demaPoint++;
+		} catch (Exception e) {
+			values[1] = getNaN();
+		}
+		try {
+			values[2] = Float.parseFloat(strs[2]);
+			demaPoint++;
+		} catch (Exception e) {
+			values[2] = getNaN();
+		}
+		try {
+			values[3] = Float.parseFloat(strs[3]);
+			demaPoint++;
+		} catch (Exception e) {
+			values[3] = Tools.getNaN();
+		}
+
+		if (demaPoint < 2) { // 若正确数据少于两组，则报错信息
+
+			// sendErr(handler);
+			throw new Exception();
+		}
+		return values;
+	}
+
+	/**
+	 * 标定和补偿时 第一步 验证输入参数
+	 * 
+	 * @param textViews
+	 * @return
+	 * @throws Exception
+	 */
+	private float[] testInput(String[] strs) throws Exception {
+
+		float[] values = new float[strs.length];
+
+		try {
+			for (int i = 0; i < values.length; i++) {
+
+				values[i] = Float.parseFloat(strs[i]);
+			}
+		} catch (Exception e) {
+			throw new Exception();
+		}
+
+		return values;
+
+	}
+
+	/**
+	 * 
+	 * 输入
+	 * 
+	 * @throws Exception
+	 */
+	private void inputCompValues(SensorManager sensorManager, float[] values)
+			throws Exception {
+		
+		sensorManager.getSensorCompensate().writeActualCompensate(values);
+	}
+
+	/**
+	 * Tb 标定的第二步: 写入参数
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	private void writeTbParams(SensorManager sensorManager, float[] inputValues)
+			throws Exception {
+
+		
+		sensorManager.writeInputOpenCount(inputValues);// 写入输入参数 打开标定
+
+	}
+
+	/**
+	 * 标定的第二步: 打开标定, 获取标定参数
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	private float[] inputAndDemaParams(SensorManager sensorManager,
+			float[] inputValues) throws Exception {
+
+		sensorManager.writeInputOpenCount(inputValues);// 写入输入参数 打开标定
+
+		float[] values = sensorManager.readDemaParams();// 获取标定参数
+
+		return values;
+
+	}
+
+	public void checkWriter_NH4_1(final SensorManager sensorManager,
+			final TextView temTextView, final TextView sampleEmfTextView,
+			final List<TextView> correctTextViews,
+			final List<TextView> emfTextViews, final int number,
+			final int unit, final int ionic, final Handler otherHandler) {
+//		System.out.println("进入checkWriter_NH4_1");
+//		System.out.println("sensorManager==" + sensorManager);
+//
+//		checkDialog = new ProgressDialog(context);
+//		checkDialog.setCanceledOnTouchOutside(false);
+//		checkDialog.show();
+//
+//		handler = new Handler() {
+//			public void handleMessage(Message msg) {
+//				if (msg.getData().getInt("err_conf") == 5) { // 输入有误时关闭dialog
+//					Toast.makeText(context, "输入有误！", Toast.LENGTH_SHORT).show();
+//					checkDialog.dismiss();
+//					return;
+//				}
+//
+//				if (msg.getData().getInt("close") == 6) { // 非正常时，关闭dialog
+//					checkDialog.dismiss();
+//					Toast.makeText(context, "读写参数发生错误！", Toast.LENGTH_SHORT)
+//							.show();
+//					return;
+//				}
+//
+//				if (msg.getData().getInt("close_ss") == 7) { // 保存完成时关闭dialog
+//					checkDialog.dismiss();
+//					Toast.makeText(context, "保存成功！", Toast.LENGTH_SHORT).show();
+//					return;
+//				}
+//
+//				// 改对话框上的显示
+//				checkDialog.setMessage(msg.getData().getString("test"));
+//			};
+//
+//		};
+//
+//		checkDialog.show();
+//
+//		new Thread() {
+//			public void run() {
+//				sendDisplayInformation(handler, "test", "系统正在验证输入的参数...");
+//
+//				try {
+//					List<double[]> dataXY = testNH4Input_density(
+//							correctTextViews, emfTextViews, number, unit, ionic);
+//
+//					sendDisplayInformation(handler, "test", "系统正在处理输入的参数...");
+//
+//					// 处理数据
+//					double[] x = dataXY.get(0);
+//					double[] y = dataXY.get(1);
+//					double sampleEmf = Double.parseDouble(sampleEmfTextView
+//							.getText().toString());
+//					double tem = Double.parseDouble(temTextView.getText()
+//							.toString());
+//					double[] regressionAnalysisResult = Similarity
+//							.regressionAnalysis(x, y);// 线性回归
+//					double tempLod = (sampleEmf - regressionAnalysisResult[1])
+//							/ regressionAnalysisResult[0];
+//					double lod = 0;
+//
+//					if (ionic == 0) { // 不添加离子强度剂
+//						lod = tempLod;// .......................................................需要公式计算后来替换
+//					} else if (ionic == 1) { // 添加离子强度剂
+//						lod = Math.pow(10, 0 - tempLod);
+//					}
+//
+//					sendDisplayInformation(handler, "test", "系统正在写入输入的参数...");
+//
+//					double[] xFit = null;// 拟合曲线的x轴坐标数组
+//					double[] yFit = null;// 拟合曲线的y轴坐标数组
+//					if (regressionAnalysisResult != null) {
+//						xFit = new double[] { x[0] - 0.1f,
+//								x[x.length - 1] + 0.1f };
+//						yFit = new double[] {
+//								regressionAnalysisResult[0] * xFit[0]
+//										+ regressionAnalysisResult[1],
+//								regressionAnalysisResult[0] * xFit[1]
+//										+ regressionAnalysisResult[1] };
+//					}
+//
+//					double[] xSample = new double[] { x[0] - 0.1f,
+//							x[x.length - 1] + 0.1f };// 水平曲线的x轴坐标数组
+//					double[] ySample = new double[] { sampleEmf, sampleEmf };// 水平曲线的y轴坐标数组
+//					List<double[]> xList = new ArrayList<double[]>();// 三条曲线的坐标集合
+//					List<double[]> yList = new ArrayList<double[]>();
+//
+//					xList.add(x);
+//					xList.add(xFit);
+//					xList.add(xSample);
+//					yList.add(y);
+//					yList.add(yFit);
+//					yList.add(ySample);
+//
+//					List<List<double[]>> list = new ArrayList<List<double[]>>();
+//					list.add(xList);
+//					list.add(yList);
+//
+//					float[] value = new float[5];
+//					value[0] = (float) tem;
+//					value[1] = Math.abs((float) regressionAnalysisResult[0]);// 斜率
+//					value[2] = Math.abs((float) regressionAnalysisResult[2]); // 相关系数
+//					value[3] = Math
+//							.abs((float) ((float) regressionAnalysisResult[0] * 100 * 298.15 / (59.16 * (tem + 273.15)))); // PTS
+//					value[4] = (float) lod;
+//
+//					// 向下位机写参数。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
+//					sensorManager.writeCorrectParams(value);// 写入输入参数 打开标定
+//
+//					double[] values = new double[5];
+//					values[0] = regressionAnalysisResult[0];// 斜率
+//					values[1] = regressionAnalysisResult[2]; // 相关系数
+//					values[2] = regressionAnalysisResult[1]; // 截距
+//					values[3] = regressionAnalysisResult[0] * 100 * 298.15
+//							/ (59.16 * (tem + 273.15)); // PTS
+//					values[4] = lod;
+//
+//					Message ms3 = new Message();
+//					Bundle bundle3 = new Bundle();
+//					bundle3.putSerializable("dataXY", (Serializable) list);
+//					bundle3.putDoubleArray("params", values);
+//					ms3.setData(bundle3);
+//					otherHandler.sendMessage(ms3);
+//
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//					if (e instanceof TransferException) {
+//						sendDisplayInformation(handler, "close", 6);
+//						return;
+//					} else {
+//						sendDisplayInformation(handler, "err_conf", 5);
+//						return;
+//					}
+//
+//				}
+//
+//				sendDisplayInformation(handler, "close_ss", 7);
+//			}
+//		}.start();
+
+	}
+
+	public void checkWriter_NH4_2(final SensorManager sensorManager,
+			final TextView temTextView, final TextView sampleEmfTextView,
+			final TextView dataTextView, final List<TextView> correctTextViews,
+			final List<TextView> emfTextViews, final int number,
+			final int unit, final int ionic, final Handler otherHandler) {
+//		System.out.println("进入checkWriter_NH4_2");
+//
+//		checkDialog = new ProgressDialog(context);
+//		checkDialog.setCanceledOnTouchOutside(false);
+//		checkDialog.show();
+//
+//		handler = new Handler() {
+//			public void handleMessage(Message msg) {
+//				if (msg.getData().getInt("err_conf") == 5) { // 输入有误时关闭dialog
+//					Toast.makeText(context, "输入有误！", Toast.LENGTH_SHORT).show();
+//					checkDialog.dismiss();
+//					return;
+//				}
+//
+//				if (msg.getData().getInt("close") == 6) { // 非正常时，关闭dialog
+//					checkDialog.dismiss();
+//					Toast.makeText(context, "读写参数发生错误！", Toast.LENGTH_SHORT)
+//							.show();
+//					return;
+//				}
+//
+//				if (msg.getData().getInt("close_ss") == 7) { // 保存完成时关闭dialog
+//					checkDialog.dismiss();
+//					Toast.makeText(context, "保存成功！", Toast.LENGTH_SHORT).show();
+//					return;
+//				}
+//
+//				// 改对话框上的显示
+//				checkDialog.setMessage(msg.getData().getString("test"));
+//			};
+//
+//		};
+//
+//		checkDialog.show();
+//
+//		new Thread() {
+//			public void run() {
+//
+//				sendDisplayInformation(handler, "test", "系统正在验证输入的参数...");
+//
+//				try {
+//					List<double[]> dataXY = testNH4Input_diolute(dataTextView,
+//							correctTextViews, emfTextViews, number, unit, ionic);
+//
+//					sendDisplayInformation(handler, "test", "系统正在处理输入的参数...");
+//
+//					// 处理数据
+//					double[] x = dataXY.get(0);
+//					double[] y = dataXY.get(1);
+//					double sampleEmf = Double.parseDouble(sampleEmfTextView
+//							.getText().toString());
+//					double tem = Double.parseDouble(temTextView.getText()
+//							.toString());
+//					double[] regressionAnalysisResult = Similarity
+//							.regressionAnalysis(x, y); // 线性回归
+//
+//					double tempLod = (sampleEmf - regressionAnalysisResult[1])
+//							/ regressionAnalysisResult[0];
+//					double lod = 0;
+//					if (ionic == 0) { // 不添加离子强度剂
+//						System.out.println("不添加离子强度剂");
+//						lod = tempLod;
+//					} else if (ionic == 1) { // 添加
+//						System.out.println("添加离子强度剂");
+//						lod = Math.pow(10, 0 - tempLod);
+//					}
+//
+//					sendDisplayInformation(handler, "test", "系统正在写入输入的参数...");
+//
+//					double[] xFit = null;// 拟合曲线的x轴坐标数组
+//					double[] yFit = null;// 拟合曲线的y轴坐标数组
+//					if (regressionAnalysisResult != null) {
+//						xFit = new double[] { x[0] - 0.1f,
+//								x[x.length - 1] + 0.1f };
+//						yFit = new double[] {
+//								regressionAnalysisResult[0] * xFit[0]
+//										+ regressionAnalysisResult[1],
+//								regressionAnalysisResult[0] * xFit[1]
+//										+ regressionAnalysisResult[1] };
+//					}
+//
+//					double[] xSample = new double[] { x[0] - 0.1f,
+//							x[x.length - 1] + 0.1f };// 水平曲线的x轴坐标数组
+//					double[] ySample = new double[] { sampleEmf, sampleEmf };// 水平曲线的y轴坐标数组
+//					List<double[]> xList = new ArrayList<double[]>();// 三条曲线的坐标集合
+//					List<double[]> yList = new ArrayList<double[]>();
+//
+//					xList.add(x);
+//					xList.add(xFit);
+//					xList.add(xSample);
+//					yList.add(y);
+//					yList.add(yFit);
+//					yList.add(ySample);
+//
+//					List<List<double[]>> list = new ArrayList<List<double[]>>();
+//					list.add(xList);
+//					list.add(yList);
+//
+//					float[] value = new float[5];
+//					value[0] = (float) tem;
+//					value[1] = Math.abs((float) regressionAnalysisResult[0]);// 斜率的绝对值
+//					value[2] = Math.abs((float) regressionAnalysisResult[2]); // 相关系数的绝对值
+//					value[3] = Math
+//							.abs((float) ((float) regressionAnalysisResult[0] * 100 * 298.15 / (59.16 * (tem + 273.15)))); // PTS的绝对值
+//					value[4] = (float) lod;
+//
+//					// 向下位机写参数。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
+//					sensorManager.writeCorrectParams(value);// 写入输入参数 打开标定
+//
+//					double[] values = new double[5];
+//					values[0] = regressionAnalysisResult[0];// 斜率
+//					values[1] = regressionAnalysisResult[2]; // 相关系数
+//					values[2] = regressionAnalysisResult[1]; // 截距
+//					values[3] = regressionAnalysisResult[0] * 100 * 298.15
+//							/ (59.16 * (tem + 273.15)); // PTS
+//					values[4] = lod;
+//
+//					Message ms3 = new Message();
+//					Bundle bundle3 = new Bundle();
+//					bundle3.putSerializable("dataXY", (Serializable) list);
+//					bundle3.putDoubleArray("params", values);
+//					ms3.setData(bundle3);
+//					otherHandler.sendMessage(ms3);
+//
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//
+//					if (e instanceof TransferException) {
+//						sendDisplayInformation(handler, "close", 6);
+//						return;
+//					} else {
+//						sendDisplayInformation(handler, "err_conf", 5);
+//						return;
+//					}
+//
+//				}
+//
+//				sendDisplayInformation(handler, "close_ss", 7);
+//
+//			}
+//		}.start();
+	}
+
+	/**
+	 * 
+	 * @param correctTextViews
+	 *            左边一列值
+	 * @param emfTextViews
+	 *            右边一列值
+	 * @param number
+	 *            总共number组数据
+	 * @param unit
+	 *            单位
+	 * @param ionic
+	 *            是否添加离子添加剂
+	 * @return
+	 * @throws Exception
+	 */
+	private List<double[]> testNH4Input_density(
+			List<TextView> correctTextViews, List<TextView> emfTextViews,
+			int number, int unit, int ionic) throws Exception {
+
+		double[] correctValues = new double[number];
+		double[] emfValues = new double[number];
+
+		switch (unit % 2) {
+		case 0:
+			for (int i = 0; i < number; i++) {
+				correctValues[i] = Double.parseDouble(correctTextViews.get(i)
+						.getText().toString());
+			}
+			break;
+
+		case 1:
+			for (int i = 0; i < number; i++) {
+				correctValues[i] = Double.parseDouble(correctTextViews.get(i)
+						.getText().toString())
+						/ (1000 * 18);
+			}
+			break;
+
+		}
+
+		for (int i = 0; i < number; i++) {
+			emfValues[i] = Double.parseDouble(emfTextViews.get(i).getText()
+					.toString());
+		}
+
+		List<double[]> listN = bubbleSort(
+				handleData(correctValues, 1, -1, ionic), emfValues);// 排序
+
+		return listN;
+
+	}
+
+	/**
+	 * 
+	 * @param textViews
+	 * @return
+	 * @throws Exception
+	 */
+	private List<double[]> testNH4Input_diolute(TextView dataTextView,
+			List<TextView> correctTextViews, List<TextView> emfTextViews,
+			int number, int unit, int ionic) throws Exception {
+
+		double data = Double.parseDouble(dataTextView.getText().toString());
+		double[] correctValues = new double[number];
+		double[] emfValues = new double[number];
+
+		switch (unit % 2) {
+		case 0:
+
+			for (int i = 0; i < number; i++) {
+				correctValues[i] = data
+						/ Double.parseDouble(correctTextViews.get(i).getText()
+								.toString());
+			}
+			break;
+		case 1:
+			for (int i = 0; i < number; i++) {
+				correctValues[i] = data
+						/ Double.parseDouble(correctTextViews.get(i).getText()
+								.toString()) / (1000 * 18);
+				// 1000*18是为了将mg/L转化为mol/L
+			}
+			break;
+
+		}
+
+		for (int i = 0; i < number; i++) {
+			emfValues[i] = Double.parseDouble(emfTextViews.get(i).getText()
+					.toString());
+		}
+
+		List<double[]> listN = bubbleSort(
+				handleData(correctValues, 1, -1, ionic), emfValues);// 排序
+
+		return listN;
+
+	}
+
+	/**
+	 * 将X轴原始坐标数据转化为pa或pc坐标
+	 * 
+	 * @param correctValues
+	 * @param z1是Z
+	 *            +的价数
+	 * @param z2是Z
+	 *            -的价数
+	 * @param ionic是否添加离子强度剂
+	 * @return
+	 */
+	double[] handleData(double[] correctValues, int z1, int z2, int ionic) {
+		double[] values = new double[correctValues.length];
+
+		switch (ionic) {
+		case 0:
+			double a = -0.5 * Math.abs(z1 * z2);
+			for (int j = 0; j < correctValues.length; j++) {
+				double k = Math.sqrt(correctValues[j]);
+				double b = k / (1 + k);
+
+				values[j] = -Math
+						.log10((Math.pow(10, a * b) * correctValues[j]));
+			}
+			break;
+		case 1:
+			for (int j = 0; j < correctValues.length; j++) {
+				values[j] = -Math.log10(correctValues[j]);
+			}
+			break;
+		}
+
+		return values;
+	}
+
+	public List<double[]> bubbleSort(double[] x, double[] y) {// 冒泡排序算法,排序后是从小到大了
+		List<double[]> list = new ArrayList<double[]>();
+		double xTemp = 0, yTemp = 0;
+
+		for (double d : x)
+			System.out.println("排序前x的元素：" + d);
+		for (double d : y)
+			System.out.println("排序前y的元素：" + d);
+
+		for (int i = 0; i < x.length - 1; i++) {
+			for (int j = i + 1; j < x.length; j++) {
+				if (x[i] > x[j]) {
+					xTemp = x[i];
+					yTemp = y[i];
+					x[i] = x[j];
+					y[i] = y[j];
+					x[j] = xTemp;
+					y[j] = yTemp;
+				}
+			}
+		}
+
+		for (double d : x)
+			System.out.println("排序后的 x的元素：" + d);
+		for (double d : y)
+			System.out.println("排序后的 y的元素：" + d);
+
+		list.add(x);
+		list.add(y);
+
+		return list;
+	}
+
+	/**
+	 * 获得非法数据
+	 * 
+	 * @return
+	 */
+	public float getNaN() {
+
+		return (float) 0 / 0;// 非法数据
+
+	}
+
+	// 发送Message信息
+	public void sendDisplayInformation(Handler hand, String key,
+			Object information) {
+		Message m = new Message();
+		Bundle bundle = new Bundle();
+		if (information instanceof String)
+			bundle.putString(key, (String) information);
+		if (information instanceof Integer)
+			bundle.putInt(key, (Integer) information);
+		if (information instanceof float[])
+			bundle.putFloatArray(key, (float[]) information);
+		m.setData(bundle);
+		hand.sendMessage(m);
+	}
+
+}

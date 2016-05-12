@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   
+    android:orientation="vertical" >
+    
+       <TextView
+           
+            android:text="@string/dema_group_correct"
+            style="@style/classify"
+          />
+      
+      
+      <LinearLayout 
+          android:layout_margin="10dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:id="@+id/result_param_correct"
+          android:background="@drawable/bg_selector_shape_rect_layout"
+          >
+          
+          
+      </LinearLayout>
+      
+       <Button
+            android:id="@+id/dema_correct_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="保存"
+            android:layout_marginTop="@dimen/margin_5"
+            android:textSize="22sp" >
+        </Button>
+      
+</LinearLayout>

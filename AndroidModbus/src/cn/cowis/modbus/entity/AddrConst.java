@@ -1,0 +1,63 @@
+package cn.cowis.modbus.entity;
+
+
+
+/**
+ * 寄存器中 地址的偏移量
+ * @author Administrator
+ *双哥
+ */
+public interface AddrConst {
+	
+//------------------变送器
+	int ADDR_TABLE_VERSION = 0x0000;
+	int COM_PARAMETERS= 0x0001;
+	int SYSTEMRESET = 0x0002;
+	int PRODUCT_TYPE_ID = 0x0003;
+	int MFD_DATE = 0x0005;
+	int HARD_SOFT_VERSION = 0x0007;
+	int PRODUCT_INFO = 0x0008;
+	//================结束变送器
+	
+	//--------------传感器的可以的相同部分的相对地址
+	
+	//------传感器相同部分
+	int SENSOR_TYPE = 0x0000;
+	int SENSOR_INFO = 0x0001;
+	int SENSOR_MFD_DATE= 0x0011;
+	int SENSOR_ENABLE_DATE = 0x0013;
+	
+	int SENSOR_AGE_OUT_DATE = 0x0015;
+	int SENSOR_LAST_CALL_DATE = 0x0017;
+	int SENSOR_NEXT_CALL_DATE = 0x0019;
+	int SENSOR_CALL_INFO=0x001B;
+	
+	int SAMPLE_COUNT_INTERVAL=0x0023;
+	int SENSOR_STATE=0x0024;
+	int D00 = 0x0025;
+	//-----------结束传感器相同部分
+	int AUTO_ANALOG_INTERVAL_TYPE = 0x0035;
+	int ANALOG_OUTPUT_LEFT_VALUE = 0x0036;
+	int ANALOG_OUTPUT_RIGHT_VALUE = 0x0038;
+
+	int DB_ANALOG_RESULT = 0x003a;
+	int SENSOR_RESULT = 0x003C;
+	int SENSOR_RESULT_UNIT = 0x003E;
+	int DB_SAMPLE_RESULTS=0X003F;
+	
+	//----------其它传感器不相同部分
+	
+	int OTHER_AUTO_ANALOG_INTERVAL_TYPE = 0x00B5;
+	int OTHER_ANALOG_OUTPUT_LEFT_VALUE = 0x00B6;
+	int OTHER_ANALOG_OUTPUT_RIGHT_VALUE = 0x00B8;
+	int OTHER_DB_ANALOG_RESULT=0x00BA;
+	int OTHER_SENSOR_R1=0x00BC;
+	int OTHER_SENSOR_R2=0x00BE;
+	int OTHER_SENSOR_R3=0x00C0;
+	int OTHER_SENSOR_R4=0x00C2;
+	int OTHER_SENSOR_RESULT_UNIT=0x00CA;
+	int OTHER_DB_SAMPLE_RESULTS=0x00CE;
+	
+
+	
+}

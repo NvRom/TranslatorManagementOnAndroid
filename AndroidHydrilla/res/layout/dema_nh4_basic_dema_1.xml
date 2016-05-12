@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/classify"
+        android:text="@string/nh4_dema_name_2" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/view_size_small"
+         android:background="@drawable/bg_selector_shape_rect_layout"
+              
+        android:orientation="vertical"
+        >
+        
+   
+
+    <cn.cowis.hydrilla.view.CustomLinearLayoutHandInput
+        android:id="@+id/nh4_base_dema_1_value_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        android:background="@drawable/bg_selector_shape_rect_layout"
+        custom:defaultInputValue="25"
+        custom:labelName="@string/nh4_base_dema_1_name_1" >
+    </cn.cowis.hydrilla.view.CustomLinearLayoutHandInput>
+
+    <!-- 采样时间间隔 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="@string/nh4_base_dema_1_name_2" />
+
+        <cn.cowis.hydrilla.view.CustomTextViewButton
+            android:id="@+id/nh4_base_dema_1_value_2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            custom:defaultValue="1"
+            custom:max="60"
+            custom:min="1" >
+        </cn.cowis.hydrilla.view.CustomTextViewButton>
+    </LinearLayout>
+    
+    <!-- 温度间隔 -->
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+             android:layout_marginLeft="10dp"
+            android:text="@string/nh4_base_dema_1_name_3" />
+
+        <cn.cowis.hydrilla.view.CustomTextViewButton
+            android:id="@+id/nh4_base_dema_1_value_3"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            custom:defaultValue="5"
+            custom:max="1"
+            custom:min="10" >
+        </cn.cowis.hydrilla.view.CustomTextViewButton>
+    </LinearLayout>
+ </LinearLayout>
+ 
+    
+    <Button
+            android:id="@+id/dema_begin_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:text="确定"
+           
+            android:textSize="22sp" />
+    
+</LinearLayout>

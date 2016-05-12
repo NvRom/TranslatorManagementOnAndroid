@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<drawable name="redd">#ff0000</drawable>
+<drawable name="yellow">#ffff00</drawable>
+<drawable name="darkgray">#404040</drawable>
+<drawable name="black">#000000</drawable>
+
+<drawable name="green">#00ff00</drawable>
+<drawable name="lightgray">#c0c0c0</drawable>
+<drawable name="white">#ffffff</drawable>
+
+<drawable name="blue">#0000ff</drawable>
+<drawable name="gray">#808080</drawable>
+<drawable name="darkgreen">#008000</drawable>
+
+<color name="black">#000000</color>
+<color name="white">#ffffff</color>
+
+</resources>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<string-array name="timeUnit">
+		<item>秒</item>
+		<item>分</item>
+		<item>时</item>
+	</string-array>
+	
+	<string-array name="densityUnit">
+		<item>mol/L</item>
+		<item>mg/L</item>
+		<item>M</item>
+		<item>ppm</item>
+	</string-array>
+	
+	
+	  <!-- usb连接的数据位 -->
+    <string-array name="usb_data">
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    
+    <!-- 停止位 -->
+    <string-array name="usb_stop">
+         <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+     <!-- 奇偶校验位 -->
+    <string-array name="usb_parity">
+         <item>NONE</item>
+        <item>ODD</item>
+        <item>EVEN</item>
+    </string-array>
+    
+    <!-- 波特率 -->
+    <string-array name="usb_baud">
+        <item>38400</item>
+         <item>19200</item>
+         <item>9600</item>
+          <item>4800</item>
+        <item>2400</item>
+    </string-array>
+    
+    <string-array name="project_nh4">
+        <item>NH4+浓度</item>
+        
+        <item>其他浓度</item>
+        
+    </string-array>
+    
+    <string-array name="method_nh4">
+        <item>不添加TISAB法</item>
+        
+        <item>添加TISAB法</item>
+        
+    </string-array>
+    
+    <string-array name="unit_nh4">
+        <item>mol/L</item>
+		<item>mg/L</item>
+		<item>M</item>
+		<item>ppm</item>
+    </string-array>
+    
+      <string-array name="round_check">
+        <item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+    </string-array>
+    
+</resources>

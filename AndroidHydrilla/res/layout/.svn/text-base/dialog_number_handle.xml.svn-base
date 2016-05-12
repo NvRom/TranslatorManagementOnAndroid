@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 操作数据 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:gravity="center"
+    >
+
+    <cn.cowis.hydrilla.view.CustomTextViewButton
+                        
+                        android:id="@+id/custom_slave_id"
+                         android:layout_width="150dp"
+                         android:layout_height="wrap_content"
+                          custom:max="255"
+                          custom:min="1"
+                        >
+                        
+     </cn.cowis.hydrilla.view.CustomTextViewButton>
+
+</LinearLayout>

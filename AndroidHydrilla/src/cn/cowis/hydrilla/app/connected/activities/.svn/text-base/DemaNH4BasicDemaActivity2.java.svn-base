@@ -1,0 +1,201 @@
+package cn.cowis.hydrilla.app.connected.activities;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.RoboGuice;
+import org.androidannotations.annotations.ViewById;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import cn.cowis.hydrilla.app.Dialogs;
+import cn.cowis.hydrilla.app.R;
+import cn.cowis.hydrilla.app.parent.SuperActivity;
+
+import com.google.inject.Inject;
+
+@EActivity(R.layout.dema_nh4_basicposition)
+@RoboGuice
+public class DemaNH4BasicPositionActivity extends SuperActivity{
+	
+	@ViewById(R.id.tem_interval)
+	TextView tem_interval ; // 输入 的温度
+
+	@ViewById(R.id.time_interval)
+	TextView time_interval ; // 
+	
+	@ViewById(R.id.nh4Density)
+	TextView nh4Density ; // 单位
+	
+	/**
+	 * 校准液浓度
+	 */
+	@ViewById(R.id.emf_text_0)
+	TextView emf_text_0 ; //emf1
+	
+	@ViewById(R.id.emf_text_1)
+	TextView emf_text_1 ; //emf1
+	
+	@ViewById(R.id.emf_text_2)
+	TextView emf_text_2 ; //emf2
+	
+	@ViewById(R.id.emf_text_3)
+	TextView emf_text_3 ; //emf3
+	
+	@ViewById(R.id.emf_text_4)
+	TextView emf_text_4 ; //emf4
+	
+	@ViewById(R.id.emf_text_5)
+	TextView emf_text_5 ; //emf5
+	
+	@ViewById(R.id.emf_text_6)
+	TextView emf_text_6 ; //emf6
+	
+	@ViewById(R.id.emf_text_7)
+	TextView emf_text_7 ; //emf7
+	
+	@ViewById(R.id.emf_text_8)
+	TextView emf_text_8 ; //emf8
+	
+	/**
+	 * 电动势
+	 */
+	@ViewById(R.id.correct_1)
+	TextView correct_1 ; //text1
+	
+	@ViewById(R.id.correct_2)
+	TextView correct_2 ; //text2
+	
+	@ViewById(R.id.correct_3)
+	TextView correct_3 ; //text3
+	
+	@ViewById(R.id.correct_4)
+	TextView correct_4 ; //text4
+	
+	@ViewById(R.id.correct_5)
+	TextView correct_5 ; //text5
+	
+	@ViewById(R.id.correct_6)
+	TextView correct_6 ; //text6
+	
+	@ViewById(R.id.correct_7)
+	TextView correct_7 ; //text7
+	
+	@ViewById(R.id.correct_8)
+	TextView correct_8 ; //text8
+	
+	/**
+	 * 各组的布局
+	 */
+	@ViewById(R.id.densityLayout)
+	LinearLayout densityLayout ; //densityLayout
+	
+	@ViewById(R.id.group_1)
+	LinearLayout group_1 ; //group1
+	
+	@ViewById(R.id.group_2)
+	LinearLayout group_2 ; //group2
+	
+	@ViewById(R.id.group_3)
+	LinearLayout group_3 ; //group3
+	
+	@ViewById(R.id.group_4)
+	LinearLayout group_4 ; //group4
+	
+	@ViewById(R.id.group_5)
+	LinearLayout group_5 ; //group5
+	
+	@ViewById(R.id.group_6)
+	LinearLayout group_6 ; //group6
+	
+	@ViewById(R.id.group_7)
+	LinearLayout group_7 ; //group7
+	
+	@ViewById(R.id.group_8)
+	LinearLayout group_8 ; //group8
+	
+	@Inject
+	Dialogs dialog;
+	
+	@Inject
+	Context context;
+	
+	//@Inject
+	//CheckWriter checkWriter;
+	
+	int position;
+	
+	@AfterViews
+	void init(){
+		//自定义布局赋值
+//		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.title_bluetooth); 
+//		LinearLayout layout_title = (LinearLayout)findViewById(R.id.layout_title);
+//		TextView title = (TextView)findViewById(R.id.title);
+//		Button tv_title = (Button)findViewById(R.id.tv_title);
+//		((ProgressBar)findViewById(R.id.pb_title)).setVisibility(View.GONE);
+//		title.setText("基值定位标定");
+		//点击开始读取数据
+//		tv_title.setText("开始");
+//		tv_title.setOnClickListener(new OnClickListener(){
+//			@Override
+//			public void onClick(View v) {
+//				
+//				//。。。
+//			}
+//			
+//		});;
+//		//点击标题栏 返回
+//		layout_title.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				finish();
+//			}
+//		});
+
+		
+	}
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		position = getIntent().getExtras().getInt("key");
+		
+	
+		
+
+    }
+	
+	private void beginRead(){
+		View view= LayoutInflater.from(context).inflate(R.layout.dialog_nh4_basicposition, null);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle("基值定位设置");
+		builder.setView(view);
+
+		final EditText text = (EditText) view.findViewById(R.id.time_countdown);
+	
+		builder.setPositiveButton("终止", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		});
+
+		AlertDialog dialog= builder.create();
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.show();
+	}
+	
+} 

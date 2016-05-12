@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <!-- 设置 content 有标定 检测 和设置 -->
+    <LinearLayout
+        android:layout_width="match_parent" 
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:id="@+id/layout_setting_content"
+        >
+        
+         
+    </LinearLayout>
+    
+    
+    <!-- 设置下面的按钮 -->
+        
+        <RadioGroup
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+            >
+            
+            <!-- 参数设置 -->
+            <RadioButton
+                android:gravity="center"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:padding="10dp"
+                 android:layout_height="match_parent"
+                 android:button="@null"
+                 android:drawableLeft="@drawable/setting"
+                 android:text="@string/_config"
+                 android:id="@+id/radio_config"
+                 android:background="@drawable/bg_selector_shape_rect_radio"
+                />
+            
+             <!-- 标定-->
+            <RadioButton
+                android:drawableLeft="@drawable/dema"
+                 android:gravity="center"
+                  android:padding="10dp"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="match_parent"
+                 android:button="@null"
+                 android:text="@string/_dema"
+                 android:id="@+id/radio_dema"
+                 android:background="@drawable/bg_selector_shape_rect_radio"
+                />
+            
+             <!-- 检测-->
+            <RadioButton
+                 android:drawableLeft="@drawable/result"
+                android:gravity="center"
+                  android:padding="10dp"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="match_parent"
+                 android:button="@null"
+                 android:text="@string/_check"
+                 android:id="@+id/radio_check"
+                 android:background="@drawable/bg_selector_shape_rect_radio"
+                />
+            
+             <!-- 更多
+            <RadioButton
+                android:gravity="center"
+                  android:padding="10dp"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="match_parent"
+                 android:button="@null"
+                 android:text="@string/_more"
+                 android:id="@+id/radio_more"
+                 android:background="@drawable/bg_selector_shape_rect_radio"
+                />
+            -->
+            
+        </RadioGroup>
+        
+       
+
+    
+</LinearLayout>

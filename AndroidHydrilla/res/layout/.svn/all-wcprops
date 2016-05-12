@@ -1,0 +1,263 @@
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/project_transmitter/!svn/ver/589/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout
+END
+dialog_number_handle.xml
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dialog_number_handle.xml
+END
+dema_tem_input.xml
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_tem_input.xml
+END
+select_tb_dema_method.xml
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/select_tb_dema_method.xml
+END
+dema_ec_input.xml
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_ec_input.xml
+END
+usb_params.xml
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/usb_params.xml
+END
+bluetooth_bond_listview.xml
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/bluetooth_bond_listview.xml
+END
+dema_sensor_result.xml
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_sensor_result.xml
+END
+dialog_nh4_basicposition.xml
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dialog_nh4_basicposition.xml
+END
+detail_params_child_listview.xml
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/detail_params_child_listview.xml
+END
+dema_nh4_basic_1.xml
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_nh4_basic_1.xml
+END
+flash_main.xml
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/flash_main.xml
+END
+check_config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/check_config.xml
+END
+check_tab.xml
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/check_tab.xml
+END
+config_param_1.xml
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/config_param_1.xml
+END
+dema_nh4_basicposition.xml
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_nh4_basicposition.xml
+END
+detail_params.xml
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/detail_params.xml
+END
+config_param_2.xml
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/config_param_2.xml
+END
+dialog_min_max.xml
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dialog_min_max.xml
+END
+config_param_3.xml
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/config_param_3.xml
+END
+dema_do_correct.xml
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_do_correct.xml
+END
+check_result.xml
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/check_result.xml
+END
+select_nh4_dema_method.xml
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/select_nh4_dema_method.xml
+END
+dema_sensor_correct_result.xml
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_sensor_correct_result.xml
+END
+dialog_nh4_workchartdema.xml
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dialog_nh4_workchartdema.xml
+END
+bluetooth_connection.xml
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/bluetooth_connection.xml
+END
+dialog_dynamic_reader.xml
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dialog_dynamic_reader.xml
+END
+selection_method.xml
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/selection_method.xml
+END
+select_dema_correct.xml
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/select_dema_correct.xml
+END
+dema_workchart_result.xml
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_workchart_result.xml
+END
+dema_tb_input_1.xml
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_tb_input_1.xml
+END
+dema_tb_input_2.xml
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_tb_input_2.xml
+END
+bluetooth_available_listview.xml
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/bluetooth_available_listview.xml
+END
+detail_params_listview.xml
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/detail_params_listview.xml
+END
+dema_tab.xml
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_tab.xml
+END
+dema_nh4_workchart.xml
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_nh4_workchart.xml
+END
+bluetooth_title.xml
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/bluetooth_title.xml
+END
+dema_orp_chart.xml
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_orp_chart.xml
+END
+dema_do_input.xml
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_do_input.xml
+END
+usb_connection.xml
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/usb_connection.xml
+END
+after_connected_tab.xml
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/after_connected_tab.xml
+END
+dema_ph_input.xml
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dema_ph_input.xml
+END
+dialog_only_number_edit.xml
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/dialog_only_number_edit.xml
+END
+spinner_item_stypelayout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/res/layout/spinner_item_stypelayout.xml
+END

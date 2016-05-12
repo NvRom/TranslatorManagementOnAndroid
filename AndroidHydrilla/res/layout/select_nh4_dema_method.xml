@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+           android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            >
+
+            <TextView
+                style="@style/classify"
+                android:text="标定操作"
+               />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@drawable/bg_selector_shape_rect_layout"
+                android:orientation="vertical" >
+
+                
+                 <cn.cowis.hydrilla.view.CustomLinearLayoutButton
+                    android:id="@+id/dema_nh4_work_chart"
+                    android:background="@drawable/bg_selector_nostroke_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    custom:buttonName="@string/nh4_dema_name_1"
+                    >
+                    
+                </cn.cowis.hydrilla.view.CustomLinearLayoutButton>
+                
+                
+                <TextView
+                   style="@style/line"/>
+                
+                
+                <cn.cowis.hydrilla.view.CustomLinearLayoutButton
+                    android:id="@+id/dema_nh4_base_orientation"
+                    android:background="@drawable/bg_selector_nostroke_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    custom:buttonName="@string/nh4_dema_name_2"
+                    >
+                    
+                </cn.cowis.hydrilla.view.CustomLinearLayoutButton>
+                
+                
+                <TextView
+                   style="@style/line"/>
+                
+              
+                
+                <cn.cowis.hydrilla.view.CustomLinearLayoutButton
+                    android:id="@+id/dema_nh4_selective_coefficient"
+                    android:background="@drawable/bg_selector_nostroke_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    custom:buttonName="@string/nh4_dema_name_3"
+                    >
+                    
+                </cn.cowis.hydrilla.view.CustomLinearLayoutButton>
+
+                
+               
+            </LinearLayout>
+
+        </LinearLayout>

@@ -1,0 +1,201 @@
+package cn.cowis.hydrilla.app.connected.fragments;
+
+import java.util.List;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
+import cn.cowis.hydrilla.app.AfterConnectedActivity;
+import cn.cowis.hydrilla.app.R;
+import cn.cowis.hydrilla.app.connected.activities.ConfigSensorActivity_;
+import cn.cowis.hydrilla.app.entity.SensorManager;
+import cn.cowis.hydrilla.app.entity.TransmitterManage;
+import cn.cowis.hydrilla.app.service.Dialogs;
+import cn.cowis.hydrilla.app.service.MyRoboApplication;
+import cn.cowis.hydrilla.view.CustomLinearLayoutButton;
+import cn.cowis.hydrilla.view.CustomLinearLayoutReadInput;
+//import android.app.Fragment;
+/**
+ * 参数配置的activity (根据传感器的类型和个数 显示不同的配置)
+ * @author Administrator
+ * 
+ */
+@EFragment(R.layout.config_param_1)
+public class ConfigParamFragment1 extends Fragment {
+
+	
+	
+	@ViewById(R.id.config_slave_id)
+	CustomLinearLayoutReadInput slaveIdLayout=null;
+	
+	@ViewById(R.id.transmitter_params)
+	LinearLayout contentSensor=null;//在这里动态添加有传感器
+	
+	private TransmitterManage transmitterManage;
+	private AfterConnectedActivity afterActivity;
+	
+	private Dialogs dialog;
+	
+	
+	
+	public class WriterAsyncTask extends AsyncTask<Integer, Void, Integer> {
+
+	
+		static final int CHECK_ERROR_TIP = 0;
+		static final int WRITER_ERROR_TIP = 1;
+		static final int SAVE_SUCCESS_TIP = 2;
+
+		String[] tips = new String[] { "从机地址超出 1~255 ！",  "从机地址修改失败！","从机地址修改成功！" };
+
+
+		private ProgressDialog checkDialog = new ProgressDialog(getActivity());
+
+		public WriterAsyncTask() {
+			super();
+
+			checkDialog.setMessage("系统正在写入数据...");
+			checkDialog.show();
+		}
+
+		@Override
+		protected Integer doInBackground(Integer... params) {
+
+			if(params[0]<1 || params[0]>255){
+				return CHECK_ERROR_TIP;
+			}
+			try{
+			transmitterManage.saveSlaveId(params[0].byteValue());
+
+			} catch (Exception e) {
+				return WRITER_ERROR_TIP;
+			}
+			return SAVE_SUCCESS_TIP;
+
+		}
+
+		protected void onPostExecute(Integer result) {
+
+			checkDialog.dismiss();
+			
+			if(result==2){
+				slaveIdLayout.setValue(String.valueOf(transmitterManage.getSlaveId()));
+			}
+			Toast.makeText(getActivity(),tips[result], Toast.LENGTH_SHORT).show();
+		}
+
+	}
+	
+	
+	
+	
+	 Handler handler = new Handler() {//获得数据的handle
+			public void handleMessage(Message msg) {
+				final int data = msg.getData().getInt("back");
+				
+				new WriterAsyncTask().execute(data);
+			};
+	};
+	
+	public class MyOnClickListener implements OnClickListener{
+
+		private int position;
+		
+		public MyOnClickListener(int position){
+			this.position=position;
+		}
+		
+		@Override
+		public void onClick(View v) {
+			
+			
+			Intent intent= new Intent(getActivity(), ConfigSensorActivity_.class);
+			Bundle bundle= new Bundle();
+			bundle.putInt("position", position);
+			intent.putExtras(bundle);
+			getActivity().startActivity(intent);
+			
+		}
+		
+	}
+	
+	
+	@Override  
+    public void onAttach(Activity activity) {  
+        super.onAttach(activity);  
+          
+        try {  
+        	afterActivity=(AfterConnectedActivity) activity;
+        	dialog=afterActivity.getDialog();
+        	
+        } catch (ClassCastException e) {  
+            throw new ClassCastException(activity.toString()  
+                    + " must implement OnHeadlineSelectedListener");  
+        }  
+        
+    }  
+	
+
+	@AfterViews
+	public void init() {
+
+		transmitterManage = ((MyRoboApplication)getActivity().getApplicationContext())
+				.getTransmitterManage();
+	
+		slaveIdLayout.setValue(String.valueOf(transmitterManage.getSlaveId()));
+		
+		contentSensor=(LinearLayout) getActivity().findViewById(R.id.transmitter_params);
+		
+		initSensor();
+	}
+	
+	/**
+	 * 根据transmitterManage动态创建 传感器
+	 */
+	public void initSensor(){
+		
+		
+		
+		List<SensorManager> listSensors= transmitterManage.getSensorManagers();
+		
+		for( int position=0;position<listSensors.size();position++){
+			
+			
+			CustomLinearLayoutButton cllb=new CustomLinearLayoutButton(getActivity());
+			
+			cllb.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+					 LayoutParams.WRAP_CONTENT));
+			cllb.setBackgroundResource(R.drawable.bg_selector_shape_rect_layout);
+			cllb.setButtonLabel(listSensors.get(position).getSensorInfo().getName()+"传感器");
+			
+			cllb.setOnClickListener(new MyOnClickListener(position));
+			
+			contentSensor.addView(cllb);
+		}
+		
+	}
+	/**
+	 * 获得从机地址
+	 */
+	@Click(R.id.config_slave_id)
+	public void inputSeriaId(View view) {
+		
+		dialog.inputDialogPlus("修改从机地址为：", handler, Integer.parseInt(slaveIdLayout.getValue()));
+	}
+
+	
+}

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/project_transmitter/!svn/ver/610/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments
+END
+DemaTbFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 171
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/DemaTbFragment.java
+END
+DemaTemInputFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 177
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/DemaTemInputFragment.java
+END
+ConfigTsmtFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 175
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/ConfigTsmtFragment.java
+END
+DemaEcInputFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/DemaEcInputFragment.java
+END
+DemaPhInputFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/DemaPhInputFragment.java
+END
+DemaNH4Fragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 172
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/DemaNH4Fragment.java
+END
+DemaSensorFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 175
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/DemaSensorFragment.java
+END
+CheckConfigFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/CheckConfigFragment.java
+END
+CheckSensorFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/CheckSensorFragment.java
+END
+DemaOrpFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 172
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/DemaOrpFragment.java
+END
+DemaDoFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 171
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/connected/fragments/DemaDoFragment.java
+END

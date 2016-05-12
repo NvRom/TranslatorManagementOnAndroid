@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    
+    <item
+         android:id="@+id/detail_tsmt"
+         android:showAsAction="never"
+     
+         android:title="@string/detail_tsmt"/>
+    <item
+         android:id="@+id/disconnect"
+         android:showAsAction="never"
+         android:title="@string/disconnect"/>
+
+</menu>

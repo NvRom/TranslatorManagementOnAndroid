@@ -1,0 +1,59 @@
+package cn.cowis.hydrilla.app.service;
+
+import java.util.List;
+
+import android.app.ProgressDialog;
+import android.os.Handler;
+import android.widget.TextView;
+import cn.cowis.hydrilla.app.entity.SensorManager;
+
+/**
+ * 
+ * 检查 向寄存器输入的参数，
+ * 并写入参数
+ * @author Administrator
+ *
+ */
+public interface CheckWriter {
+
+	/**
+	 * 验证，输入参数并获得标定参数
+	 */
+	void demaInputWriter(SensorManager sensorManager,
+			String [] strs, Class intentClass,int position);
+	
+	
+	/**输入补偿参数
+	 */
+	public void compensateWriter( SensorManager sensorManager,String[] compStrs,int interval,int num,int position);
+	
+	/**
+	 * 
+	 * @param tem 标定温度
+	 * @param sampleEmf 对照 Emf 值
+	 * @param correctTextViews，第一列
+	 * @param emfTextViews，第二列
+	 * @param number 取list中的前number个来检查并处理
+	 * @param unit 单位
+	 * @param flag 是否添加离子强度剂
+	 * @return
+	 */
+	void checkWriter_NH4_1(SensorManager sensorManager,TextView tem,TextView sampleEmf,List<TextView> correctTextViews,List<TextView> emfTextViews
+				,int number,int unit,int flag,Handler handler);
+	
+	
+	/**
+	 * 
+	 * @param tem 标定温度
+	 * @param sampleEmf 对照 Emf 值
+	 * @param dataTextView 让用户输入的NH4+浓度值
+	 * @param correctTextViews，第一列
+	 * @param emfTextViews ，第二列
+	 * @param number 取list中的前number个来检查并处理
+	 * @param unit 单位
+	 * @param flag 是否添加离子强度剂
+	 * @return
+	 */
+	void checkWriter_NH4_2(SensorManager sensorManager,TextView tem,TextView sampleEmf,TextView dataTextView,List<TextView> correctTextViews,List<TextView> emfTextViews
+			,int number,int unit,int flag,Handler handler);
+}

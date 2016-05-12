@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <TextView
+           
+            android:text="@string/dema_group_input"
+            style="@style/classify"
+          />
+        
+        <!-- input的温度 -->
+        
+         <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_selector_shape_rect_layout"
+                 android:layout_margin="@dimen/view_size_small"
+                 
+                custom:labelName="@string/dema_ec_input_1"
+                
+                android:layout_height="wrap_content"
+                android:id="@+id/dema_ec_input_value1"
+                
+                >
+                
+           </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+        
+        
+       
+      
+       <!-- count 电导率 -->
+       
+        <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_selector_shape_rect_layout"
+                 android:layout_marginLeft="@dimen/view_size_small"
+                  android:layout_marginRight="@dimen/view_size_small"
+                custom:labelName="@string/dema_ec_count_1"
+                
+                android:layout_height="wrap_content"
+                android:id="@+id/dema_ec_count1"
+                
+                >
+                
+           </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+        
+
+      
+        
+       
+       <!-- 阻抗 -->
+  
+       
+        <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_selector_shape_rect_layout"
+                 android:layout_marginLeft="@dimen/view_size_small"
+                  android:layout_marginRight="@dimen/view_size_small"
+                  android:layout_marginTop="@dimen/view_size_small"
+                custom:labelName="@string/dema_ec_input_2"
+                
+                android:layout_height="wrap_content"
+                android:id="@+id/dema_ec_input_value2"
+                
+                >
+                
+           </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+   
+       
+        <Button
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/dema_dema_button"
+              android:id="@+id/dema_ec_button"
+              android:textColor="#000"
+              android:layout_marginTop="@dimen/margin_5"
+              android:textSize="22sp"
+            />
+        
+    </LinearLayout>
+
+</ScrollView>

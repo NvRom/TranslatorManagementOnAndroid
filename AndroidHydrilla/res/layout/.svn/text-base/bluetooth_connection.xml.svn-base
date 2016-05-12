@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white" >
+
+    
+  <ScrollView android:layout_width="match_parent"
+	    android:layout_height="0dp" 
+	    android:layout_weight="1"
+      >
+	<LinearLayout android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	   >
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:text="@string/bond_list" />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"     
+                 >
+
+                <ListView
+                    android:id="@+id/bond_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:choiceMode="singleChoice"
+                 
+                    android:background="@drawable/bg_selector_shape_rect_layout"
+                    android:divider="#C0C0C0"
+                    android:dividerHeight="1px"
+                    android:scrollbarAlwaysDrawVerticalTrack="false" >
+                </ListView>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/availableDeviceText"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:gravity="center_vertical"
+                android:textColor="#000"
+                android:text="@string/available_list" />
+
+            <LinearLayout
+                android:id="@+id/LinearLayout01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <ListView
+                    android:id="@+id/availableDeviceListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_selector_shape_rect_layout"
+                    android:choiceMode="singleChoice"
+                    android:divider="#C0C0C0"
+                    android:dividerHeight="1px"
+                    android:scrollbarAlwaysDrawVerticalTrack="false" >
+                </ListView>
+            </LinearLayout>
+            </LinearLayout>
+            </ScrollView>
+
+  
+  <!-- 上面的 slaveId-->
+  
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical" 
+         >
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:layout_marginLeft="10dp"
+                android:text="@string/slaveIdRange" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_selector_shape_rect_layout" 
+            android:orientation="vertical" 
+           	android:layout_weight="2">
+
+            <LinearLayout
+                android:id="@+id/layout_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="最小值"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+                </TextView>
+
+               
+                    <cn.cowis.hydrilla.view.CustomTextViewButton
+                        android:id="@+id/custom_view_num_1"
+                         android:layout_width="150dp"
+                         android:layout_height="wrap_content"
+                      
+                          custom:defaultValue="1"
+                          custom:max="255"
+                          custom:min="1"
+                        >
+                        
+                    </cn.cowis.hydrilla.view.CustomTextViewButton>
+       
+
+                
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+              android:background="#C0C0C0" />
+
+            <LinearLayout
+                android:id="@+id/layout_4"
+                 android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    
+                    android:gravity="center_vertical"
+                    android:text="最大值"
+                    android:textColor="@color/black" />
+
+                <TextView
+                   android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"  >
+                </TextView>
+
+                       <cn.cowis.hydrilla.view.CustomTextViewButton
+                        android:id="@+id/custom_view_num_2"
+                        
+                         android:layout_height="wrap_content"
+                         
+                         android:layout_width="150dp"
+                          custom:defaultValue="6"
+                          custom:max="255"
+                          custom:min="1"
+                        >
+                        
+                    </cn.cowis.hydrilla.view.CustomTextViewButton>
+
+                   
+            </LinearLayout>
+
+        </LinearLayout>
+     </LinearLayout>
+    
+
+  
+   
+    <!-- 下面的 -->
+    <LinearLayout
+        android:id="@+id/layout_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        android:gravity="bottom"
+      >
+
+        <TextView
+           android:padding="10dp"
+             android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/bg_selector_shape_half_rect_button"
+            android:text="@string/button_back" 
+            android:textSize="25sp"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="2px"
+            android:layout_height="fill_parent"
+            android:background="#C0C0C0"
+          />
+
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/bluetooth_connect_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+          	android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/bg_selector_shape_half_rect_button"
+            
+            android:text="@string/connection_button_connect"
+            android:textSize="25sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

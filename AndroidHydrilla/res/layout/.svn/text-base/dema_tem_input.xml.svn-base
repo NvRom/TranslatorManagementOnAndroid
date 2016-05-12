@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        android:orientation="vertical" >
+
+        
+         <TextView
+            android:text="@string/dema_group_input"
+            style="@style/classify"
+            />
+         
+        <!-- input的输入参数 1 -->
+        
+         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" 
+            android:textSize="13dp"
+            android:textColor="#000"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="第一校准点"/>
+        
+        <LinearLayout
+              android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/bg_selector_shape_rect_layout"
+             android:orientation="vertical"
+            >
+            
+          <cn.cowis.hydrilla.view.CustomLinearLayoutHandInput
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_selector_nostroke_layout"
+                
+                custom:labelName="@string/dema_tem_input_1"
+                 custom:defaultInputValue="25"
+                android:layout_height="wrap_content"
+                android:id="@+id/dema_tem_input_value1"
+                >
+                
+            </cn.cowis.hydrilla.view.CustomLinearLayoutHandInput>
+            
+          <TextView
+              style="@style/line"
+              />
+           <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                android:layout_width="match_parent"
+                 android:background="@drawable/bg_selector_nostroke_layout"
+                
+                custom:labelName="@string/dema_tem_input_2"
+                
+                android:layout_height="wrap_content"
+                android:id="@+id/dema_tem_input_value2"
+                
+                >
+                
+           </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+          
+          
+         </LinearLayout>
+        
+
+        <!-- input的输入参数3 -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" 
+            android:textSize="13dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textColor="#000"
+            android:text="第二校准点"/>
+
+        
+         <LinearLayout
+              android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/bg_selector_shape_rect_layout"
+             android:orientation="vertical"
+            >
+            
+          <cn.cowis.hydrilla.view.CustomLinearLayoutHandInput
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_selector_nostroke_layout"
+                
+                custom:labelName="@string/dema_tem_input_3"
+                custom:defaultInputValue="25"
+                android:layout_height="wrap_content"
+                android:id="@+id/dema_tem_input_value3"
+                >
+                
+            </cn.cowis.hydrilla.view.CustomLinearLayoutHandInput>
+            <TextView
+              style="@style/line"
+              />
+          
+           <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+                android:layout_width="match_parent"
+                 android:background="@drawable/bg_selector_nostroke_layout"
+                
+                custom:labelName="@string/dema_tem_input_4"
+                
+                android:layout_height="wrap_content"
+                android:id="@+id/dema_tem_input_value4"
+                
+                >
+                
+           </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+          
+          
+         </LinearLayout>
+       
+
+        <!-- input的输入参数4 -->
+
+        <Button
+            android:id="@+id/dema_tem_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dema_dema_button"
+            android:layout_marginTop="@dimen/margin_5"
+            android:textSize="22sp" >
+        </Button>
+    </LinearLayout>
+
+</ScrollView>

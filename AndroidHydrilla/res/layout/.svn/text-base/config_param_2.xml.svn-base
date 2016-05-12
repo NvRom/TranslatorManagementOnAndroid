@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+       android:background="@drawable/bg_selector_shape_rect_layout"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/sensortype_layout"
+            style="@style/parent_mark"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_selector_nostroke_layout" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    style="@style/input_1"
+                    android:text="传感器类型" />
+
+                <TextView
+                    android:id="@+id/sensortype"
+                    style="@style/input_2" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/mark"
+              />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#C0C0C0"/>
+
+        <LinearLayout
+            android:id="@+id/workingstate_layout"
+            style="@style/parent_mark" 
+           android:background="@drawable/bg_selector_nostroke_layout">
+
+            <TextView
+                android:id="@+id/working_text"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:text="工作状态" 
+                android:textColor="#000"/>
+
+            <Switch
+                android:id="@+id/workingstate_Switcher"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/margin_5"
+                android:checked="false"
+                android:textOff="卸载"
+                android:textOn="安装"
+              	android:thumb="@drawable/m003"
+                android:track="@drawable/m002"
+                />
+
+        </LinearLayout>
+
+        <!-- gone 补偿设置 -->
+        <LinearLayout
+             android:id="@+id/comp_tem_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#C0C0C0" />
+
+            <LinearLayout
+               
+                style="@style/parent_mark"
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_selector_nostroke_layout" >
+
+                <TextView
+                    android:id="@+id/comp_tem_text"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:text="温度补偿" 
+                     android:textColor="#000"/>
+
+                <Switch
+                    android:id="@+id/comp_tem_switcher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:checked="false"
+                    android:textOff="手动"
+                    android:textOn="自动"
+                    android:thumb="@drawable/m003"
+                	android:track="@drawable/m002"
+                	/>
+            </LinearLayout>
+        </LinearLayout>
+        
+         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#C0C0C0"/>
+
+        <LinearLayout
+            android:id="@+id/measuring_range_layout"
+            style="@style/parent_mark"
+            android:layout_width="match_parent"
+        	android:background="@drawable/bg_selector_nostroke_layout" >
+
+            <LinearLayout
+                android:id="@+id/range_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/input_1"
+                        android:text="测定上下限" />
+
+                    <TextView
+                        android:id="@+id/range_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                       />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp" >
+
+                    <TextView
+                        android:id="@+id/min_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="到" />
+
+                    <TextView
+                        android:id="@+id/max_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:text="14" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/mark"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:background="@drawable/bg_selector_shape_half_rect_button"
+        android:layout_margin="5dp"
+        android:textSize="@dimen/view_size_big"
+        android:text="保存" />
+
+</LinearLayout>

@@ -1,0 +1,16 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="view_size_superbig">36sp</dimen>
+    <dimen name="view_size_big">25sp</dimen>
+    <dimen name="view_size_small">10sp</dimen>
+    <dimen name="view_size_middle">20sp</dimen>
+   
+    
+    <dimen name="margin_5">5sp</dimen>
+    <dimen name="margin_10">10sp</dimen>
+    <dimen name="margin_15">15sp</dimen>
+    
+    <dimen name="margin_sp_13">13sp</dimen>
+
+</resources>

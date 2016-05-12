@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <!-- 上面的选项卡 -->
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal"
+       android:background="@drawable/bg_selector_shape_rect_layout"
+        >
+        <!-- 第一个选项卡 -->
+        
+        <!-- 第二个选项卡 -->
+
+         <LinearLayout
+             android:id="@+id/check_layout_1"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:orientation="vertical" >
+
+             <TextView
+                 android:id="@+id/check_name_1"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:gravity="center_horizontal"
+                 android:paddingTop="@dimen/margin_5"
+                 android:textColor="#000"
+                  />
+
+             <TextView
+                 android:id="@+id/check_state_1"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:gravity="center_horizontal"
+                 android:paddingBottom="@dimen/margin_5"
+                 android:textColor="#000"
+                 />
+
+         </LinearLayout>
+
+         <LinearLayout
+             android:id="@+id/check_layout_2"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:orientation="vertical" >
+
+             <TextView
+                 android:id="@+id/check_name_2"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:gravity="center_horizontal"
+                 android:paddingTop="@dimen/margin_5"
+                 android:textColor="#000"
+                />
+
+             <TextView
+                 android:id="@+id/check_state_2"
+                  android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:gravity="center_horizontal"
+                 android:paddingBottom="@dimen/margin_5"
+                 android:textColor="#000"
+                />
+
+         </LinearLayout>
+        
+    </LinearLayout>
+    
+    <!-- 下面的类容 -->
+    
+    <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical"
+         android:id="@+id/check_content"
+        >
+         
+        <android.support.v4.view.ViewPager
+            android:id="@+id/check_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+   		 </android.support.v4.view.ViewPager>
+        
+    </LinearLayout>
+
+
+</LinearLayout>

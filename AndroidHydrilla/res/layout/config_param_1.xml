@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 参数配置 -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        
+        <!-- 上面的配置 
+        <TextView
+            style="@style/classify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/communication_config_param" />
+-->
+        <!-- 从机地址 
+        
+        <cn.cowis.hydrilla.view.CustomLinearLayoutReadInput
+            android:id="@+id/config_slave_id"
+            android:layout_margin="@dimen/margin_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_selector_shape_rect_layout"
+            custom:labelName="@string/config_param_seria_slaveId"
+            >
+            
+        </cn.cowis.hydrilla.view.CustomLinearLayoutReadInput>
+        
+        -->
+        <!-- 下面的变送器 -->
+           <TextView
+              style="@style/classify"
+              android:text="变送器配置"
+            />
+        <!-- 这里可以添加变送器 -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            
+            >
+            
+            <LinearLayout
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/father_tsmt_layout"
+                android:background="@drawable/bg_selector_shape_rect_layout"
+                >
+                
+            </LinearLayout>
+            
+
+        </ScrollView>
+        
+        
+    </LinearLayout>

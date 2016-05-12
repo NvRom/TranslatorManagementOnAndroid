@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/project_transmitter/!svn/ver/589/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/charts
+END
+FittingChartManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/charts/FittingChartManager.java
+END
+ResultChartManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 162
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/charts/ResultChartManager.java
+END
+SuperChartManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/charts/SuperChartManager.java
+END
+AnalogChartManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 162
+/svn/project_transmitter/!svn/ver/618/trunk/06.embedded_code/transmitter_android_20140107/AndroidHydrilla/src/cn/cowis/hydrilla/app/charts/AnalogChartManager.java
+END

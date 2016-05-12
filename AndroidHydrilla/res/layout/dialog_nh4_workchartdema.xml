@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:text="校准方法"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:background="@drawable/bg_selector_shape_rect_layout"
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/ionic"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="添加离子强度剂法" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#C0C0C0" />
+
+        <RadioButton
+            android:id="@+id/noIonic"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="不添加离子强度剂法" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_margin="@dimen/margin_10"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="浓度单位 ：" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+             />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:textSize="20sp"
+        android:text="输入数据类型" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+         android:background="@drawable/bg_selector_shape_rect_layout"
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/densityRadio"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="浓度值输入" />
+
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#C0C0C0" />
+
+    <RadioButton
+        android:id="@+id/diluteRadio"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="稀释标准液输入" />
+
+</LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_10"
+       />
+
+</LinearLayout>

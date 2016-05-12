@@ -1,0 +1,9 @@
+package cn.cowis.hydrilla.app.connected.activities;
+
+import cn.cowis.hydrilla.app.parent.SuperActivity;
+
+public class DemaNH4BasicPostionActivity1 extends SuperActivity{
+	
+	
+
+}

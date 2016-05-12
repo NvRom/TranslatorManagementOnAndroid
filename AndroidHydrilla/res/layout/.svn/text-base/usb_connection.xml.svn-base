@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    
+    >
+
+   
+    <!-- 数据位和停止位 -->
+
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp" 
+        >
+        <include
+    layout="@layout/usb_params" 
+    
+    />
+    </LinearLayout>
+
+   
+
+    <!-- 选择设备并连接部分 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp" 
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/usb_connection_group2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+         android:orientation="vertical" 
+
+        >
+        
+          <!-- 上面部分 设备的listView -->
+         
+            <ListView
+                android:id="@+id/usb_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 android:background="@drawable/bg_selector_shape_rect_layout"
+                android:scrollbarAlwaysDrawVerticalTrack="true" >
+            </ListView>
+      
+           
+        
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+       android:background="@color/white" />
+    
+    <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:layout_marginLeft="10dp"
+                android:text="@string/slaveIdRange" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_selector_shape_rect_layout" 
+            android:orientation="vertical" 
+           	>
+
+            <LinearLayout
+                android:id="@+id/layout_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="最小值"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+                </TextView>
+
+               
+                    <cn.cowis.hydrilla.view.CustomTextViewButton
+                        android:id="@+id/custom_view_num_1"
+                         android:layout_width="150dp"
+                         android:layout_height="wrap_content"
+                      
+                          custom:defaultValue="1"
+                          custom:max="255"
+                          custom:min="1"
+                        >
+                        
+                    </cn.cowis.hydrilla.view.CustomTextViewButton>
+       
+
+                
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+              android:background="#C0C0C0" />
+
+            <LinearLayout
+                android:id="@+id/layout_4"
+                 android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    
+                    android:gravity="center_vertical"
+                    android:text="最大值"
+                    android:textColor="@color/black" />
+
+                <TextView
+                   android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"  >
+                </TextView>
+
+                       <cn.cowis.hydrilla.view.CustomTextViewButton
+                        android:id="@+id/custom_view_num_2"
+                        
+                         android:layout_height="wrap_content"
+                         
+                         android:layout_width="150dp"
+                          custom:defaultValue="6"
+                          custom:max="255"
+                          custom:min="1"
+                        >
+                        
+                    </cn.cowis.hydrilla.view.CustomTextViewButton>
+
+                   
+            </LinearLayout>
+
+        </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+      />
+      
+            
+
+        <!-- 底部 的按钮部分 -->
+<LinearLayout 
+        android:id="@+id/layout_5"
+         android:layout_width="fill_parent" 
+         android:layout_height="wrap_content" 
+         android:background="@drawable/bg_selector_shape_rect_layout">
+
+        <TextView android:id="@+id/back" 
+            android:layout_width="wrap_content" 
+            android:layout_height="50dp"
+             android:layout_weight="1"
+              android:gravity="center" 
+              android:text="@string/button_back" 
+              android:textSize="25sp" />
+
+        <TextView android:id="@+id/textView3"
+             android:layout_width="2px" 
+             android:layout_height="fill_parent" 
+              android:background="#C0C0C0" />
+
+        <TextView android:id="@+id/usb_connect_button" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+             android:layout_weight="1" 
+             android:gravity="center" 
+             android:text="@string/connection_button_connect" 
+             android:textSize="25sp" />
+    </LinearLayout>
+
+</LinearLayout>

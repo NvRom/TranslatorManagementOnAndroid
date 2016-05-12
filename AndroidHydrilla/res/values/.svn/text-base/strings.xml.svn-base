@@ -1,0 +1,230 @@
+<resources>
+    
+    <string name="app_name">智能数字传感器应用软件 v1.2.3 （基础版）</string>
+    <string name="hello_world"></string>
+    <string name="action_settings"></string>
+    <string name="button_back">返回</string>
+    <string name="slaveIdRange">从机地址扫描范围</string>
+    
+    
+    <string name="flash_name1">KW5010-A/pH智能数字传感器</string>
+    <string name="flash_name2">应用软件_v1.2.3 (Android版)</string>
+    <string name="flash_name3">基础版</string>
+    <string name="flash_name4">安徽科微智能科技有限公司研制</string>
+    
+    
+    <string name="selection_name">请选择连接方式</string>
+    <string name="selection_bluetooth">蓝牙通讯连接</string>
+    <string name="selection_usb">OTG串口连接</string>
+    <string name="selection_button">连接</string>
+    
+    <string name="usb_connection_group1">串口通信设置</string>
+    <string name="usb_connection1">数据位</string>
+    <string name="usb_connection2">停止位</string>
+    <string name="usb_connection3">奇偶校验</string>
+    <string name="usb_connection4">波特率</string>
+    
+    <string name="usb_connection_group2">连接的设备</string>
+    
+    
+    
+    <string name="mark">＞</string>
+    
+    <string name="min">最小值</string>
+    <string name="max">最大值</string>
+    
+    
+    <string name="bluetooth_connection1">蓝牙通信端口搜索</string>
+     <string name="slaveId_min">从机地址min</string>
+    <string name="slaveId_max">从机地址max</string>
+    <string name="bluetooth_connection_button_find">搜索</string>
+    <string name="bluetooth_connection_button_pair">配对</string>
+    
+    
+     <string name="connection_button_connect">连接</string>
+    <!--总配置  -->
+    <string name="communication_config_param"> 通信参数配置</string>
+    <string name="sensor_select">传感器配置</string>
+    <string name="config_param_seria">串口参数配置</string>
+    <string name="config_param_seria_slaveId">从机地址</string>
+   
+    
+    <string name="config_param_transmitter">变送器配置</string>
+    <string name="config_param_t">温度补偿</string>
+    
+    <string name="config_param_obj_select">电极校准选择</string>
+    
+    
+    <string name="save">保存</string>
+    
+    <string name="range_setting">范围设置</string>
+    
+    <!-- 是标定的界面 -->
+    <string name="newDemoJPDoResult">极谱式溶解氧电极标定结果</string>
+    <string name="newDemoYDDoResult">原电池式溶解氧电极标定结果</string>
+    <string name="newDemoorpResult">orp电极标定结果</string>
+    <string name="newDemopHResult">pH电极标定结果</string>
+    <string name="newDemoecResult">电导率电极标定结果</string>
+    <string name="newDemotemResult">温度电极标定结果</string>
+    
+    <string name="dema_read_start">读取</string>
+    <string name="dema_read_stop">暂停</string>
+    <string name="dema_read_clear">清除</string>
+    
+    <string name="dema_dema_button">开始校准</string>
+    <string name="sure">确定</string>
+    
+    <string name="dema_group_input">标定数据记录</string>
+    <string name="dema_group_result">标定结果</string>
+    
+    <string name="dema_group_correct">校准数据记录</string>
+    <string name="dema_group_result_correct">校准结果</string>
+    
+    <string name="dema_tem_input_1">基准温度/℃</string>
+    <string name="dema_tem_input_2">标称零功率电阻值/kΩ</string>
+     <string name="dema_tem_input_3">校准液温度/℃</string>
+    <string name="dema_tem_input_4">该温度下零功率电阻值/kΩ</string>
+    
+    <string name="dema_tem_result_1">热敏电阻系数/K :</string>
+    
+    
+    <string name="dema_ph_input_1">标定状态温度/℃</string>
+    <string name="dema_ph_input_2">标准液电动势/mV</string>
+    <string name="dema_ph_count_1">标准液pH值</string>
+    
+    <string name="dema_ph_input_group_1">B4校准液(邻苯二甲酸氢钾) Emf/mV</string>
+    <string name="dema_ph_input_group_2">B6校准液(混合磷酸盐) Emf/mV</string>
+    <string name="dema_ph_input_group_3">B9校准液(四硼酸钠) Emf/mV</string>
+    
+    <string name="dema_ph_result_1">拟合截距值/mV</string>
+    <string name="dema_ph_result_2">拟合斜率值/mV</string>
+    <string name="dema_ph_result_3">百分理论斜率/%</string>
+    
+    
+    <string name="dema_ec_input_1">标准溶解温度/℃</string>
+    <string name="dema_ec_count_1">当前温度下0.01mol/L KCL标液电导率/(μS/cm)</string>
+    <string name="dema_ec_input_2">校准液阻抗值/Ω</string>
+    
+    <string name="dema_ec_result_1">电导池常数/cm-1</string>
+    <string name="dema_ec_result_2">盐含量折算系数</string>
+    
+    
+    <string name="dema_do_group_1">第一校准点</string>
+    <string name="dema_do_group_2">第二校准点</string>
+    <string name="dema_do_method">标定方法</string>
+    
+    <string name="emf">Emf标准溶液电动势/mV</string>
+    
+    <string name="dema_do_input_1">输入气压值 /kPa</string>
+    <string name="dema_do_input_2">标定温度/℃</string>
+    <string name="dema_do_input_3">标定电流  </string>
+    
+    <string name="dema_do_result_1">活化系数/K</string>
+    <string name="dema_do_result_2">指前因子</string>
+    
+    
+     <string name="dema_do_group_correct_1">第一校准点</string>
+    <string name="dema_do_group_correct_2">第二校准点</string>
+    <string name="dema_do_method_correct">选择调零方法</string>
+    
+    <string name="dema_do_correct_1">无氧水温度/℃</string>
+    <string name="dema_do_correct_2">电极输出信号</string>
+    
+    <string name="dema_do_result_correct_1">残余电流校正斜率</string>
+    <string name="dema_do_result_correct_2">残余电流校正截距</string>
+    
+  
+    <string name="dema_orp_input_style"> ORP参比电极类型配置</string>
+    <string name="dema_orp_input_ag">饱和Ag/AgCl电极</string>
+    <string name="dema_orp_input_hg">饱和甘汞电极</string>
+    
+    <string name="dema_one">单点标定</string>
+    <string name="dema_two">两点标定</string>
+    
+    <string name="correct_one">1、</string>
+    <string name="correct_two">2、</string>
+    <string name="correct_three">3、</string>
+    <string name="correct_four">4、</string>
+    <string name="correct_five">5、</string>
+    <string name="correct_six">6、</string>
+    <string name="correct_seven">7、</string>
+    <string name="correct_eight">8、</string>
+    <string name="concentration">浓度</string>
+    <string name="volume">体积</string>
+
+    <!-- 检测结果 -->
+    <string name="newCheckJPDoResult">极谱式溶解氧电极检测结果</string>
+    <string name="newCheckYDDoResult">原电池式溶解氧电极检测结果</string>
+    <string name="newCheckorpResult">orp电极检测结果</string>
+    <string name="newCheckpHResult">pH电极检测结果</string>
+    <string name="newCheckecResult">电导率电极检测结果</string>
+    <string name="newChecktemResult">温度电极检测结果</string>
+    <string name="newChecktbResult">浊度电极检测结果</string>
+    <string name="newCheckNH4Result">NH4+电极检测结果</string>
+    <string name="newCheckFResult">F-电极检测结果</string>
+   
+    <string name="check_param_group1">补偿设置</string>
+    <string name="check_param_group2">检测设置</string>
+    
+    <string name="check_compensate_1">温度/℃</string>
+    <string name="check_compensate_2">气压/kPa</string>
+    <string name="check_compensate_3">电导率/(μS/cm)</string>
+    <string name="check_compensate_4">电导率补偿系数/℃-1</string>
+    <string name="check_compensate_5">pH</string>
+    <string name="check_compensate_6">K+活度 /(mol/L)</string>
+    <string name="check_compensate_7">Na+活度 /(mol/L)</string>
+    
+    
+    
+    
+    <string name="config_setting">参数配置</string>
+    <string name="dema_setting">电极标定</string>
+    <string name="result_setting">样品检测</string>
+    <string name="setting_exit">退出</string>
+    <string name="bond_list">已配对的蓝牙设备</string>
+    <string name="available_list">可用蓝牙设备</string>
+    
+    <string name="dema_elec_param">电极参数标定</string>
+    <string name="correct_rest_elec">残余电流校正</string>
+   
+    
+  
+    
+    <string name="find_divices">查找</string>
+    <string name="blue_connect">蓝牙连接</string>
+    
+    <string name="_config">参数配置</string>
+    <string name="_dema">电极标定</string>
+    <string name="_check">样品检测</string>
+    <string name="_more">更多</string>
+    
+    <string name="connect_method">连接方式</string>
+    
+    
+    <string name="dema_tb_input_1">标定电流/mA</string>
+    <string name="dema_tb_input_2">校准液浊度值 /NTU</string>
+    
+    
+    <string name="check_project">测定项目</string>
+    <string name="check_method">检测方法</string>
+    <string name="check_unit">数值单位</string>
+    <string name="check_round">数值修约</string>
+    <string name="check_period">测定周期</string>
+    <string name="check_way">检测方式</string>
+    <string name="check_dyn">实时动态检测</string>
+    <string name="check_num">按次数检测</string>
+    <string name="check_t">温度补偿</string>
+    <string name="t_auto">自动</string>
+    <string name="t_hand">手动</string>
+    
+    
+    <string name="tsmt_connect_param">连接配置</string>
+    <string name="tsmt_save_param">保存配置</string>
+    
+    <string name="disconnect">断开连接</string>
+    <string name="detail_tsmt">详细属性</string>
+    
+    <string name="tsmt_params">变送器属性</string>
+    <string name="sensor_params_0">传感器0属性</string>
+    <string name="sensor_params_1">传感器1属性</string>
+</resources>

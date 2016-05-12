@@ -1,0 +1,196 @@
+package cn.cowis.hydrilla.app.service;
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.widget.Toast;
+import cn.cowis.hydrilla.app.AfterConnectedActivity_;
+import cn.cowis.hydrilla.app.entity.TransmitterManage;
+import cn.cowis.modbus.MasterProxy;
+import cn.cowis.modbus.entity.Sensor;
+import cn.cowis.modbus.entity.Transmitter;
+import cn.cowis.modbus.master.BluetoothMaster;
+import cn.cowis.modbus.master.Master;
+import cn.cowis.modbus.master.USBMaster;
+import com.google.inject.Inject;
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
+
+public class ConnectionImpl implements Connection {
+
+	private  MasterProxy masterProxy;
+	
+	private ProgressDialog connectDialog;
+	@Inject
+	Context context;
+	
+	private Thread threadConnecting;
+	
+	
+	@SuppressLint("HandlerLeak")
+	private Handler handler = new Handler() {	// 判断连接成功还是失败
+
+		@Override
+		public void handleMessage(Message msg) {
+
+			if (msg.what == 1) {// 出现异常
+				Toast.makeText(context, msg.getData().getString("error"), Toast.LENGTH_SHORT).show();
+			} else {
+				TransmitterManage transmitterManage = (TransmitterManage) msg
+						.getData().getSerializable("transmitterManage");
+
+				((MyRoboApplication) context.getApplicationContext())
+						.setTransmitterManage(transmitterManage);
+
+					Intent intent = new Intent(context,AfterConnectedActivity_.class);
+					context.startActivity(intent);
+			}
+			connectDialog.dismiss();
+
+		}
+	};
+
+	@Override
+	public void bluetoothConnect(BluetoothSocket bluetoothSocket, int slaveIdMin,int slaveIdMax) {
+		
+		//新建立一个ProgressDialog
+		createProgressDialog();
+		
+		BluetoothMaster bluetoothMaster = new BluetoothMaster(bluetoothSocket);
+		
+		getConnectValue(bluetoothMaster,slaveIdMin,slaveIdMax);
+		
+	}
+
+	@Override
+	public void usbConnect(UsbSerialDriver usbSerialDriver, int slaveIdMin,int slaveIdMax) {
+		
+		 createProgressDialog();
+		 USBMaster usbMaster = new USBMaster(usbSerialDriver);
+		// masterProxy = MasterProxy.getInstance(master);
+		
+		getConnectValue(usbMaster,slaveIdMin,slaveIdMax);
+	}
+
+
+
+	/**
+	 * 目前 只有一个变送器（ 一个从机id），如果以后连接多个可以在这里改
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+
+	public void getConnectValue(final Master master,final int slaveIdMin,final int slaveIdMax) {
+
+	
+		final Message msg = new Message();
+
+		threadConnecting=new Thread() {
+			public void run() {
+				
+				masterProxy= MasterProxy.getInstance(master);  // 用它来读写报文呢
+				
+				masterProxy.open();   //实际是master.open();  连接，或获得输入输出流,这样就可以与下位机交互了
+				
+				List<Integer> listSlaveId = masterProxy.scanForSlaveNodes(slaveIdMin, slaveIdMax);//搜索存在的从机，并放入List中
+				List<Transmitter> transmitterList=new ArrayList<Transmitter>();
+				try {
+					if(listSlaveId.size()==0){
+						throw new Exception("未找到从机设备！");
+					}
+					for(int slaveId:listSlaveId){	//给每个可用从机建立个变送器 ，且为该变送器初始化参数及传感器
+						Transmitter transmitter = new Transmitter(masterProxy,slaveId);
+							//transmitter.readComParameters();
+							transmitter.setComParameters(masterProxy.getParams());
+		//					transmitter.readHardSoftVersion();
+		//					transmitter.readProductTypeId();
+		//					transmitter.readProductInfo();
+		//					transmitter.readMfdDate();
+		//					transmitter.readAddrTableVersion();
+							Sensor[] sensors = transmitter.initSensors().getSensors(); // 在变送器里创建主副传感器对象 便于管理这两个传感器
+	
+							for (int j = 0; j < sensors.length; j++) {
+		//						sensors[j].readSampleCountInterval();
+		//						sensors[j].readSensorCallInfo();
+		//						sensors[j].readSensorAgeOutDate();
+		//						sensors[j].readSensorEnableDate();
+		//						sensors[j].readSensorLastCallDate();
+		//						sensors[j].readSensorMfdDate();
+		//						sensors[j].readSensorNextCallDate();
+								sensors[j].readSensorType();//传感器类型
+								sensors[j].readSensorStatueSwitch();//传感器中“自动标定开关”和“工作状态”的值，从下位机read
+								
+								sensors[j].initSensorParams().initAllParams();//传感器的算法参数
+								sensors[j].readAnalogOutputLeftValue();//测定下限
+								sensors[j].readAnalogOutputRightValue();//测定上限
+							}
+						transmitterList.add(transmitter);
+					}
+					// 目前 一次只连接一个传感器
+					msg.getData().putSerializable("transmitterManage",new TransmitterManage(transmitterList.get(0)));//getData() Obtains a Bundle 
+					handler.sendMessage(msg);
+				} catch (Exception e) {
+					
+					msg.what = 1;
+					msg.getData().putString("error", e.getMessage());
+					handler.sendMessage(msg);
+				}
+
+			}
+		};
+		
+		threadConnecting.start();
+	}
+
+	
+	public void destory() {
+		if(masterProxy!=null){
+		 masterProxy.destroy();
+		}
+	}
+	
+	/**
+	 * 创建ProgressDialog
+	 */
+	public  void createProgressDialog(){
+		
+		connectDialog = new ProgressDialog(context);
+		connectDialog.setMessage("正在连接，请稍后...");
+		
+		connectDialog.setCanceledOnTouchOutside(false);
+		connectDialog.show();
+		
+		//点击返回键也会调用这个方法
+		connectDialog.setOnDismissListener(new OnDismissListener(){
+
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				if(threadConnecting.isAlive()){
+					masterProxy.setCutSend(true);
+				}
+			}
+			
+		});
+	}
+
+	@Override
+	public void bluetoothConnect() {
+		
+	}
+
+	@Override
+	public void usbConnect() {
+		
+	}
+
+}

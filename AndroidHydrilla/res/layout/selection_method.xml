@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/cn.cowis.hydrilla.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C0C0C0"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:orientation="vertical"
+        android:background="@drawable/bg_selector_shape_rect_layout" >
+
+        <cn.cowis.hydrilla.view.CustomLinearLayoutButton
+                    android:id="@+id/bluetooth_layout"
+                    android:background="@drawable/bg_selector_nostroke_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    custom:buttonName="@string/selection_bluetooth"
+                    >
+                    
+                </cn.cowis.hydrilla.view.CustomLinearLayoutButton>
+                
+                
+                <TextView
+                   style="@style/line"/>
+                
+                
+                
+         <cn.cowis.hydrilla.view.CustomLinearLayoutButton
+                    android:id="@+id/Usb_layout"
+                    android:background="@drawable/bg_selector_nostroke_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    custom:buttonName="@string/selection_usb"
+                    >
+                    
+                </cn.cowis.hydrilla.view.CustomLinearLayoutButton>
+        
+</LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" 
+        />
+    
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_selector_shape_rect_layout"
+        android:text="@string/setting_exit"
+        android:textSize="25sp" />
+ 
+</LinearLayout>

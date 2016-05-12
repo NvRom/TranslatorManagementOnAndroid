@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_selector_shape_rect_layout"
+    android:focusable="false"
+     >
+     
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="32sp"
+		android:layout_gravity="center_vertical"
+		android:layout_marginLeft="2dp"
+        android:src="@drawable/ic_bluetooth_bond" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="3dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/b_device_name"
+            android:layout_width="wrap_content"
+             android:textColor="@color/black"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:text="name" />
+
+        <TextView
+            android:textColor="@color/blue"
+            android:id="@+id/b_device_mac"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:text="MAC" />
+
+    </LinearLayout>
+
+    <CheckedTextView
+        android:id="@+id/checked_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:checkMark="?android:attr/textCheckMark"
+        android:gravity="center_vertical"
+        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:paddingRight="?android:attr/listPreferredItemPaddingRight" />
+
+</LinearLayout>

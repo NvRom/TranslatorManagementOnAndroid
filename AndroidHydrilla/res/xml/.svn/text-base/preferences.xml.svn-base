@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+   
+    <PreferenceCategory android:title="@string/map_title">
+        
+        <!-- 地图类型 -->
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/map_type_name"
+            android:entryValues="@array/map_type_value"            
+            android:key="pref_map_type"
+            android:summary="@string/satellite_map"
+            android:title="@string/dialog_title_map"/>
+        
+        
+        <!-- 报警距离 -->
+         <EditTextPreference
+	        android:defaultValue="2.5"
+	        android:dialogTitle="@string/dialog_title_alart_distatnce"
+	        android:inputType="numberDecimal"
+	        android:key="pref_alart_distance"
+	        android:title="@string/alart_distance" />
+         
+         
+         <!-- 指导距离 -->
+          <EditTextPreference
+	        android:defaultValue="100"
+	        android:dialogTitle="@string/dialog_title_guide_distance"
+	        android:inputType="number"
+	        android:key="pref_pointer_guide"
+	       
+	        android:title="@string/alart_pointer_guide" />
+        
+         
+          <!-- 航线路径大小 -->
+           <EditTextPreference
+	        android:defaultValue="100"
+	        android:dialogTitle="@string/dialog_title_sail_path"
+	        android:inputType="number"
+	       
+	        android:key="pref_path_size"
+	        android:title="@string/sail_path_size" />
+           
+        </PreferenceCategory>
+           
+    
+  
+    <!-- 系统设置 -->
+         <PreferenceCategory
+             android:title="@string/system_title"
+             >
+           <!-- 连接方式-->
+           
+            <ListPreference
+            android:defaultValue="USB"
+            android:entries="@array/connect_method_list"
+            android:entryValues="@array/connect_method_list"
+            android:key="pref_connection_type"
+            android:title="@string/connect_method"/>
+            
+            <!-- 连接参数 -->
+            <PreferenceScreen
+            android:key="connect_param"
+            android:title="@string/connect_param">
+            <PreferenceCategory
+                android:key="pref_usb_param"
+                android:title="USB">
+                <ListPreference
+                    android:defaultValue="57600"
+                    android:entries="@array/baud_rate"
+                    android:entryValues="@array/baud_rate"
+                    android:key="pref_usb_set"
+                    android:title="@string/connect_bate"/>
+            </PreferenceCategory>
+            </PreferenceScreen>
+           
+            
+            <!-- 语言设置 -->
+            
+            <ListPreference
+            android:defaultValue="@string/language_china"
+            android:entries="@array/language_name"
+            android:entryValues="@array/language_name"            
+            android:key="pref_language_set"
+            
+            android:dialogTitle="@string/dialog_title_language"
+            android:title="@string/language"/>
+               
+         </PreferenceCategory> 
+         
+           <!-- 配置  里面有罗盘校准 -->
+         <PreferenceCategory
+             android:title="@string/config"
+             android:key="pc_config_imu"
+             >
+           
+             
+         </PreferenceCategory>
+         
+         
+         <PreferenceCategory 
+             android:title="@string/about_title"
+             >
+            
+             <!-- version -->
+             <EditTextPreference
+           
+            android:enabled="false"
+            android:persistent="false"
+            android:selectable="false"
+            android:shouldDisableView="false"
+            android:title="@string/version_detail"/>
+             
+        <EditTextPreference
+            android:enabled="false"
+            android:persistent="false"
+            android:selectable="false"
+            android:shouldDisableView="false"
+            android:summary="@string/position_detail"
+            android:title="@string/storge_position"/>
+             
+         </PreferenceCategory>
+         
+       
+
+</PreferenceScreen>
